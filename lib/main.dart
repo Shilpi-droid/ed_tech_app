@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:skido/pages/apply_now_page.dart';
+import 'package:skido/pages/create_cv_page.dart';
+import 'package:skido/pages/create_new_task.dart';
+import 'package:skido/pages/detail_page.dart';
 import 'package:skido/pages/index_pages.dart';
+import 'package:skido/pages/notifications_page.dart';
+import 'package:skido/pages/splash_screen.dart';
+import 'package:skido/pages/tasks_sheet.dart';
+import 'package:skido/pages/working_proffessional_page1.dart';
+import 'package:skido/widgets/detail_page_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +26,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:SplashScreen(),
+      //SplashScreen()
+
     );
   }
 }

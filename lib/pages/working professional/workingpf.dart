@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skido/pages/working_proffessional_page1.dart';
 import 'package:skido/ui.dart';
 import 'package:skido/widgets/buttons.dart';
 import 'package:skido/widgets/categories.dart';
@@ -116,7 +117,14 @@ class _WorkingProfState extends State<WorkingProf> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TransPButton(text: 'Learning', height: 30, width: 98, fsize: 13,),
+                      GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>  WorkingProffessional1()),
+                            );
+                          },
+                          child: TransPButton(text: 'Learning', height: 30, width: 98, fsize: 13,)),
                       SizedBox(width: 20),
                       TransPButton(text: 'Changing Job', height: 30, width: 110, fsize: 13,),
                     ],

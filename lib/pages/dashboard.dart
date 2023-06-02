@@ -309,6 +309,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:skido/pages/8to12.dart';
+import 'package:skido/pages/apply_now_page.dart';
+import 'package:skido/pages/notifications_page.dart';
 import 'package:skido/pages/working%20professional/workingpf.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -365,7 +367,15 @@ class LandingPage extends StatelessWidget {
                             },
                             child: Icon(Icons.post_add,  size: 25, color: Colors.white, )
                         ),
-                        Icon(Icons.notifications,  size: 25, color: Colors.white,),
+                        GestureDetector(
+                            onTap: ()
+                            {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) =>  NotificationsPage()),
+                              );
+                            },
+                            child: Icon(Icons.notifications,  size: 25, color: Colors.white,)),
                       ],
                     )
                   ],
@@ -530,7 +540,14 @@ class LandingPage extends StatelessWidget {
                         SizedBox(width: 10),
                         Division(imageUrl: 'assets/Landing_page/10-11.png', div: '10th-12th', descp: 'Choose your ideal\nstream & subjects.',),
                         SizedBox(width: 10),
-                        Division(imageUrl: 'assets/Landing_page/college.png', div: 'College', descp: 'Choose your ideal\nstream & subjects.',),
+                        GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) =>  ApplyNowPage()),
+                              );
+                            },
+                            child: Division(imageUrl: 'assets/Landing_page/college.png', div: 'College', descp: 'Choose your ideal\nstream & subjects.',)),
                         SizedBox(width: 10),
                         GestureDetector(
                             onTap: (){
