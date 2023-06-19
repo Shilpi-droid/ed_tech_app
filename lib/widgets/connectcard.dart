@@ -30,6 +30,7 @@ class ConnectCard extends StatelessWidget {
                         children: [
                           Text(
                             text,
+                            overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               color: Colors.white,

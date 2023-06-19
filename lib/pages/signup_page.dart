@@ -1,10 +1,13 @@
 
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:skido/pages/signin_page.dart';
 
+import '../Config/config.dart';
 import '../widgets/gmail_facebook_container.dart';
+import 'package:http/http.dart' as http;
 
 
 class SignUpPage extends StatefulWidget {
@@ -20,6 +23,37 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _pdController = new TextEditingController();
   TextEditingController _cpdController = new TextEditingController();
+  bool _isNotValidate = false;
+
+  void registerUser() async{
+      if(_pdController!=_cpdController){
+        setState(() {
+          _isNotValidate = true;
+        });
+      }
+
+      else if(_emailController.text.isNotEmpty && _pdController.text.isNotEmpty){
+      var regBody = {
+        "email":_emailController.text,
+        "password":_pdController.text
+      };
+      var response = await http.post(Uri.parse(registration),
+          headers: {"Content-Type":"application/json"},
+          body: jsonEncode(regBody)
+      );
+      var jsonResponse = jsonDecode(response.body);
+      print(jsonResponse['status']);
+      if(jsonResponse['status']){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+      }else{
+        print("SomeThing Went Wrong");
+      }
+    }else{
+      setState(() {
+        _isNotValidate = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,6 +245,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                           hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
                                           hintText: 'Email Id',
                                           border: InputBorder.none,
+                                          errorStyle: TextStyle(color: Colors.white),
+                                          errorText: _isNotValidate ? "Enter Proper Info" : null,
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 10),
                                         ),
@@ -269,6 +305,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                       hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
                                       hintText: 'Password',
                                       border: InputBorder.none,
+                                      errorStyle: TextStyle(color: Colors.white),
+                                      errorText: _isNotValidate ? "Enter Proper Info" : null,
                                       contentPadding: EdgeInsets.symmetric(
                                           horizontal: 40, vertical: 10),
                                     ),
@@ -323,6 +361,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                           hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
                                           hintText: 'Confirm Password',
                                           border: InputBorder.none,
+                                          errorStyle: TextStyle(color: Colors.white),
+                                          errorText: _isNotValidate ? "Enter Proper Info" : null,
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 10),
                                         ),
@@ -342,7 +382,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                     GestureDetector(
                       onTap: () {
-
+                        registerUser();
                       },
                       child: Container(
                         margin: EdgeInsets.only(top: 20),

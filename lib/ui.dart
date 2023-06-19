@@ -32,13 +32,6 @@ class CardUI extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(color:Colors.white, width: 0.4),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.grey.withOpacity(0.2),
-            //     blurRadius: 3.0,
-            //     spreadRadius: 2.0,
-            //   ),
-            // ],
           ),
           child: child,
         ),
@@ -463,3 +456,6 @@ class FeaturedCourse extends StatelessWidget {
     );
   }
 }
+
+
+

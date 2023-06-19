@@ -378,3 +378,80 @@ class CourseCat extends StatelessWidget {
     );
   }
 }
+
+
+// class TestimonCard extends StatelessWidget {
+//   final String imageUrl;
+//   final String name, role, address;
+//   final String descp;
+//
+//   TestimonCard({required this.imageUrl, required this.name, required this.role, required this.address, required this.descp});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final width=MediaQuery.of(context).size.width;
+//     return Stack(
+//       //alignment: Alignment.topCenter,
+//       children: [
+//         Container(
+//           child: Row(
+//             children: [
+//               SizedBox(height:30),
+//               CardUI(
+//                 height:111,
+//                 width: 160,
+//                 child: Container(
+//                   width: 160,  // Adjust the width as needed
+//                   height: 100,  // Adjust the height as needed
+//                   color: Colors.transparent,  // Adjust the color and opacity as needed
+//                   child:Row(
+//                     children: [
+//                       //SizedBox(width: width*0.35),
+//                       Column(
+//                         children: [
+//                           //SizedBox(height),
+//                           Container(
+//                             width: 100,
+//                             child: Text(
+//                               descp,
+//                               textAlign: TextAlign.center,
+//                               style: GoogleFonts.montserrat(
+//                                 color: Colors.white,
+//                                 fontWeight: FontWeight.w400,
+//                                 fontSize: 10,
+//                               ),
+//                             ),
+//                           ),
+//                           SizedBox(height:10),
+//                           Text(
+//                             '- $name | $role, $address',
+//                             textAlign: TextAlign.center,
+//                             style: GoogleFonts.montserrat(
+//                               color: Colors.white,
+//                               fontWeight: FontWeight.w400,
+//                               fontSize: 8,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         Align(
+//           alignment: AlignmentDirectional.topStart,
+//           child: Container(
+//             height: 117,
+//             child: Image.asset(
+//               imageUrl,
+//               fit: BoxFit.cover,
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

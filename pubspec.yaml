@@ -38,10 +38,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^4.0.4
   youtube_player_flutter: ^8.1.2
-  http:
+  http: ^1.0.0
   google_sign_in: ^6.1.0
   intl:
   readmore: ^2.2.0
+  shared_preferences: ^2.1.2
+  jwt_decoder: ^2.0.1
+  jwt_decode: ^0.3.1
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +82,11 @@ flutter:
      - assets/splash/
      - assets/subjects/
      - assets/Task/
+     - assets/5-10/
+     - assets/AboutUs/
+     - assets/InterviewRole/
+     - assets/GoogleInt/
+     - assets/Interview/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

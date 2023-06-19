@@ -3,10 +3,14 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skido/pages/dashboard.dart';
 import 'package:skido/pages/signup_page.dart';
 
+import '../Config/config.dart';
 import '../main.dart';
 import '../widgets/gmail_facebook_container.dart';
 
@@ -22,32 +26,69 @@ class _SignInPageState extends State<SignInPage> {
 
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _pdController = new TextEditingController();
-  int loginStatus = 0;
+  //int loginStatus = 0;
+  bool _isNotValidate = false;
 
-
-  Future login(String email, String password) async {
-    var url = Uri.parse('https://docdock.onrender.com/login');
-    var requestBody = jsonEncode({
-      "email": email,
-      "password": password,
-    });
-    var response = await http.post(url,
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.acceptHeader: '*'
-        },
-        body: requestBody);
-
-    Map<String, dynamic> responsei = jsonDecode(response.body.toString());
-    setState(() {
-      if (responsei['success'].toString() == "1") {
-        loginStatus = 1;
-      }
-    });
-    print(responsei['success']);
-    print(response.statusCode);
-    // return responsei['success'].toString();
+  late SharedPreferences prefs;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initSharedPref();
   }
+  void initSharedPref() async{
+    prefs = await SharedPreferences.getInstance();
+  }
+  void loginUser() async{
+    if(_emailController.text.isNotEmpty && _pdController.text.isNotEmpty){
+      var reqBody = {
+        "email":_emailController.text,
+        "password":_pdController.text
+      };
+      var response = await http.post(Uri.parse(login.toString()),
+          headers: {"Content-Type":"application/json"},
+          body: jsonEncode(reqBody)
+      );
+      var jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
+      if(jsonResponse['status']){
+        var myToken = jsonResponse['token'];
+        var name  = jsonResponse['name'];
+        prefs.setString('token', myToken);
+        // String name = jsonResponse['_name'];
+        // print(name);
+        // print('hiiii');
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage(token: myToken, name: name)));
+      }else{
+        print('Something went wrong');
+      }
+    }
+  }
+
+
+  // Future login(String email, String password) async {
+  //   var url = Uri.parse('https://docdock.onrender.com/login');
+  //   var requestBody = jsonEncode({
+  //     "email": email,
+  //     "password": password,
+  //   });
+  //   var response = await http.post(url,
+  //       headers: {
+  //         HttpHeaders.contentTypeHeader: 'application/json',
+  //         HttpHeaders.acceptHeader: '*'
+  //       },
+  //       body: requestBody);
+  //
+  //   Map<String, dynamic> responsei = jsonDecode(response.body.toString());
+  //   setState(() {
+  //     if (responsei['success'].toString() == "1") {
+  //       loginStatus = 1;
+  //     }
+  //   });
+  //   print(responsei['success']);
+  //   print(response.statusCode);
+  //   // return responsei['success'].toString();
+  // }
   bool _isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -121,13 +162,15 @@ class _SignInPageState extends State<SignInPage> {
                                   sigmaX: 3,
                                 ),
                                 child:Stack(
-                                  children:[ TextFormField(
+                                  children:[
+                                    TextFormField(
                                     controller: _emailController,
                                     onChanged: (text) {},
                                     decoration: InputDecoration(
                                       hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
                                       hintText: 'Email Id',
                                       border: InputBorder.none,
+                                      errorText: _isNotValidate ? "Enter Proper Info" : null,
                                       contentPadding: EdgeInsets.symmetric(
                                           horizontal: 80, vertical: 10),
                                     ),
@@ -191,7 +234,7 @@ class _SignInPageState extends State<SignInPage> {
                                     controller: _pdController,
                                     onChanged: (text) {},
                                     decoration: InputDecoration(
-
+                                      errorText: _isNotValidate ? "Enter Proper Info" : null,
                                       hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
                                       hintText: 'Password',
                                       border: InputBorder.none,
@@ -234,51 +277,92 @@ class _SignInPageState extends State<SignInPage> {
                     ],),
 
 
-                    GestureDetector(
-                      onTap: () {
-                        // login(_emailController.text, _pdController.text);
-                        // print(loginStatus);
-                        // if (loginStatus == 1) {
-                        //   // Navigator.push(
-                        //   //     context,
-                        //   //     MaterialPageRoute(
-                        //   //         builder: (context) => RootPage()));
-                        //   loginStatus = 0;
-                        // } else {
-                        //   print('Login failed');
-                        // }
-
-                        Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyHomePage(title: 'Flutter Demo Home Page'),));
-
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 20),
-                        height: height*.063,
-                        width: width*.7,
-                        decoration: BoxDecoration(
-                          color: Color(0xff5D73C3),
-                          borderRadius: BorderRadius.circular(15),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     // login(_emailController.text, _pdController.text);
+                    //     // print(loginStatus);
+                    //     // if (loginStatus == 1) {
+                    //     //   // Navigator.push(
+                    //     //   //     context,
+                    //     //   //     MaterialPageRoute(
+                    //     //   //         builder: (context) => RootPage()));
+                    //     //   loginStatus = 0;
+                    //     // } else {
+                    //     //   print('Login failed');
+                    //     // }
+                    //     loginUser();
+                    //
+                    //     // Navigator.push(
+                    //     //       context,
+                    //     //       MaterialPageRoute(
+                    //     //           builder: (context) => MyHomePage(title: 'Flutter Demo Home Page'),));
+                    //
+                    //   },
+                    //   child: Container(
+                    //     margin: EdgeInsets.only(top: 20),
+                    //     height: height*.063,
+                    //     width: width*.7,
+                    //     decoration: BoxDecoration(
+                    //       color: Color(0xff5D73C3),
+                    //       borderRadius: BorderRadius.circular(15),
+                    //       boxShadow: [
+                    //         BoxShadow(
+                    //           color: Colors.black38,
+                    //           blurRadius: 12,
+                    //           offset: Offset(
+                    //             -3.0, // Move to right 10  horizontally
+                    //             5.0, // Move to bottom 10 Vertically
+                    //           ),)
+                    //       ],
+                    //     ),
+                    //     child: Center(
+                    //         child: Text(
+                    //           'Login',
+                    //           style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontSize: 20,
+                    //               fontWeight: FontWeight.bold),
+                    //         )),
+                    //   ),
+                    // ),
+                    Container(
+                      decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 12,
+                              color: Colors.black.withOpacity(0.4),
+                              blurRadius: 4,
+                              spreadRadius: 0,
                               offset: Offset(
-                                -3.0, // Move to right 10  horizontally
-                                5.0, // Move to bottom 10 Vertically
-                              ),)
-                          ],
+                                0,
+                                5,
+                              ),
+                            )
+                          ]
+                      ),
+                      child: SizedBox(
+                        width: 226,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Color(0xff5D73C3),
+                            primary: Colors.red.withOpacity(0),
+                            shadowColor: Colors.black,
+
+                          ),
+                          onPressed: () {
+                            loginUser();
+                          },
+                          child: Text(
+                            'Start',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
-                        child: Center(
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            )),
                       ),
                     ),
                     SizedBox(height: 20,),

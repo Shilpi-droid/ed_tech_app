@@ -21,9 +21,11 @@ class _Eightto12State extends State<Eightto12> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Container(
+      height: double.maxFinite,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/elements/backg.png'),
+          fit: BoxFit.cover,
         ),
       ),
       child: Scaffold(
