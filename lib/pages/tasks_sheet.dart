@@ -126,54 +126,56 @@ class _TaskSheetState extends State<TaskSheet> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Stack(
-          children: [
-            Container(
-                height: height,
-                width: width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/elements/backg.png'),
-                    fit: BoxFit.cover,
-                  ),
-                )
+      body: SafeArea(
+        child: Container(
+          height: height,
+          width: width,
+
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/elements/backg.png'),
+              fit: BoxFit.cover,
             ),
-            Positioned(
-                top: height*.02,
-                child: IconButton(
-                    onPressed: (){},
-                    icon:Icon(Icons.arrow_back_ios_outlined,color: Colors.white,))),
-            Positioned(
-              top: height*.08,
-              left: width*.045,
-              child: Row(
-                children: [
-                  Text('Task Sheet',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold),),
-                  SizedBox(width: width*.1,),
-                  Container(
-                    height:height*.048 ,
-                    width: width*.42,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white.withOpacity(.2)),
-                        color: Color(0xff5F6097),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Hello Dianne,",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600
+          ),
+          child: SingleChildScrollView(
+
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                    onPressed: (){Navigator.pop(context);},
+                      icon:Icon(Icons.arrow_back_ios_outlined,color: Colors.white,))
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text('Task Sheet',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold,),),
+                    SizedBox(width: width*.1,),
+                    Container(
+                      height:height*.048 ,
+                      width: width*.42,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white.withOpacity(.2)),
+                          color: Color(0xff5F6097),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Hello Dianne,",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),),
-            Positioned(
-                top:height*.16,
-                child: Container(
+                  ],
+                ),
+                SizedBox(height: height*.02,),
+                Container(
                   width: width,
                   height: 70,
                   child: ListView.builder(
@@ -186,55 +188,40 @@ class _TaskSheetState extends State<TaskSheet> {
                       return capsuleView(index);
                     },
                   ),
-                )
-            ),
-            Positioned(
-                top:height*.28,
-                left: width*.05,
-                child: Container(
-                  width: width*.7,
+                ),
+                SizedBox(height: height*.02,),
+                Container(
+                  width: width*.9,
                   height: height*.21,
                   child:TaskToday(),
-                )
-            ),
-            Positioned(
-                top: height*.25,
-                right:width*.015,
-                child: Image.asset("assets/Task/task_vector.png",scale: .8,)
-            ),
-            Positioned(
-                top: height*.53,
-                left:width*.05,
-                child: FinishedWork(title: "Illustration Design Concept")
-            ),
-            Positioned(
-                top: height*.62,
-                left:width*.05,
-                child:Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("Notes",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 23,
-                    ),),
                 ),
-            ),
-            Positioned(
-                top: height*.66,
-                left:width*.05,
-                child: Column(
-                  children: [
-                    Note(text: "Final Project meeting",),
-                    Note(text: "Work Review",),
-                    Note(text: "Discussion",),
-                  ],
-                )
-            ),
-            Positioned(
-                top: height*.92,
-                left:width*.02,
-                child: GestureDetector(
+                SizedBox(height: height*.02,),
+                FinishedWork(title: "Illustration Design Concept"),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal:width*.05),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Notes",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),),
+                  ),
+                ),
+                SizedBox(height: height*.02,),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width*.05),
+                  child: Column(
+                    children: [
+                      Note(text: "Final Project meeting",),
+                      Note(text: "Work Review",),
+                      Note(text: "Discussion",),
+                    ],
+                  ),
+                ),
+                SizedBox(height: height*.03,),
+                GestureDetector(
                     onTap: (){
                       Navigator.push(
                         context,
@@ -242,11 +229,142 @@ class _TaskSheetState extends State<TaskSheet> {
                       );
                     },
                     child: NextWidget(text: "Next Sheet",))
-            )
-
-          ],
+              ],
+            ),
+          ),
+        ),
       ),
     );
+
+
+
+
+
+
+
+    //   Scaffold(
+    //   body: Stack(
+    //       children: [
+    //         Container(
+    //             height: height,
+    //             width: width,
+    //             decoration: BoxDecoration(
+    //               image: DecorationImage(
+    //                 image: AssetImage('assets/elements/backg.png'),
+    //                 fit: BoxFit.cover,
+    //               ),
+    //             )
+    //         ),
+    //         Positioned(
+    //             top: height*.02,
+    //             child: IconButton(
+    //                 onPressed: (){},
+    //                 icon:Icon(Icons.arrow_back_ios_outlined,color: Colors.white,))),
+    //         Positioned(
+    //           top: height*.08,
+    //           left: width*.045,
+    //           child: Row(
+    //             children: [
+    //               Text('Task Sheet',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.bold),),
+    //               SizedBox(width: width*.1,),
+    //               Container(
+    //                 height:height*.048 ,
+    //                 width: width*.42,
+    //                 decoration: BoxDecoration(
+    //                     border: Border.all(color: Colors.white.withOpacity(.2)),
+    //                     color: Color(0xff5F6097),
+    //                     borderRadius: BorderRadius.circular(10)
+    //                 ),
+    //                 child: Center(
+    //                   child: Text(
+    //                     "Hello Dianne,",
+    //                     style: TextStyle(
+    //                         color: Colors.white,
+    //                         fontSize: 20,
+    //                         fontWeight: FontWeight.w600
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //         Positioned(
+    //             top:height*.16,
+    //             child: Container(
+    //               width: width,
+    //               height: 70,
+    //               child: ListView.builder(
+    //                 controller: scrollController,
+    //                 scrollDirection: Axis.horizontal,
+    //                 physics: const ClampingScrollPhysics(),
+    //                 shrinkWrap: true,
+    //                 itemCount: currentMonthList.length,
+    //                 itemBuilder: (BuildContext context, int index) {
+    //                   return capsuleView(index);
+    //                 },
+    //               ),
+    //             )
+    //         ),
+    //         Positioned(
+    //             top:height*.28,
+    //             left: width*.05,
+    //             child: Container(
+    //               width: width*.7,
+    //               height: height*.21,
+    //               child:TaskToday(),
+    //             )
+    //         ),
+    //         Positioned(
+    //             top: height*.25,
+    //             right:width*.015,
+    //             child: Image.asset("assets/Task/task_vector.png",scale: .8,)
+    //         ),
+    //         Positioned(
+    //             top: height*.53,
+    //             left:width*.05,
+    //             child: FinishedWork(title: "Illustration Design Concept")
+    //         ),
+    //         Positioned(
+    //             top: height*.62,
+    //             left:width*.05,
+    //             child:Align(
+    //               alignment: Alignment.topLeft,
+    //               child: Text("Notes",
+    //                 style: TextStyle(
+    //                   color: Colors.white,
+    //                   fontWeight: FontWeight.bold,
+    //                   fontSize: 23,
+    //                 ),),
+    //             ),
+    //         ),
+    //         Positioned(
+    //             top: height*.66,
+    //             left:width*.05,
+    //             child: Column(
+    //               children: [
+    //                 Note(text: "Final Project meeting",),
+    //                 Note(text: "Work Review",),
+    //                 Note(text: "Discussion",),
+    //               ],
+    //             )
+    //         ),
+    //         Positioned(
+    //             top: height*.92,
+    //             left:width*.02,
+    //             child: GestureDetector(
+    //                 onTap: (){
+    //                   Navigator.push(
+    //                     context,
+    //                     MaterialPageRoute(builder: (context) =>  CreateNewTask()),
+    //                   );
+    //                 },
+    //                 child: NextWidget(text: "Next Sheet",))
+    //         )
+    //
+    //       ],
+    //   ),
+    // );
   }
 }
 

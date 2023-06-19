@@ -13,19 +13,19 @@ class Division extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width:130,
+      width:150,
       child: Stack(
         //alignment: Alignment.topCenter,
         children: [
           Column(
             children: [
-              SizedBox(height:40),
+              SizedBox(height:30),
               CardUI(
-                height:120,
-                width: 130,
+                height:140,
+                width: 150,
                 child: Container(
-                  width: 120.0,  // Adjust the width as needed
-                  height: 130.0,  // Adjust the height as needed
+                  width: 150.0,  // Adjust the width as needed
+                  height: 140.0,  // Adjust the height as needed
                   color: Colors.transparent,  // Adjust the color and opacity as needed
                   child:Column(
                     children: [
@@ -39,10 +39,11 @@ class Division extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(height:10),
+                       SizedBox(height:10),
                       Text(
                         descp,
                         textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.montserrat(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,

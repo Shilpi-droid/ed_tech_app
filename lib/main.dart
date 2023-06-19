@@ -198,7 +198,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'My App',
-      home: isValidToken ? MyHomePage(token: token, name : name) : SignInPage(),
+      theme: ThemeData(
+        fontFamily: "Montserrat"
+      ),
+      home:
+      //ApplyNowPage()
+      isValidToken ? MyHomePage(token: token, name : name) : SignInPage(),
     );
   }
 }

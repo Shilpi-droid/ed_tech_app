@@ -12,7 +12,7 @@ class CreateNewTaskWidget extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return Container(
       height: height*.27,
-      width: width,
+      width: width*.9,
       child:  Stack(
         children: [
             Positioned(
@@ -33,7 +33,7 @@ class CreateNewTaskWidget extends StatelessWidget {
                 )
             ),
           Positioned(
-            right: 37,
+            right: 0,
               top: 10,
               child: Container(
                 width: width*.48,

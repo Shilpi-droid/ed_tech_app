@@ -41,12 +41,13 @@ class ApplyNowHeader extends StatelessWidget {
                     sigmaX: 3,
                   ),
                   child:
-                  Stack(children: [
-                    Positioned(
-                        top: height*.045,
-                        left: width*.03,
-                        child: Image(image:AssetImage("assets/header/header.png"))),
-                  ],)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                    Image(image:AssetImage("assets/header/header.png")),
+                      Image(image:AssetImage("assets/header/headerimg.png")),
+                  ],
+                  )
               ),
             ],
           ),

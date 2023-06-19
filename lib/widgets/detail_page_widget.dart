@@ -26,7 +26,7 @@ class _DetailPageUIState extends State<DetailPageUI> {
               width: width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/background_img.png'),
+                  image: AssetImage('assets/elements/backg.png'),
                   fit: BoxFit.cover,
                 ),
               )
