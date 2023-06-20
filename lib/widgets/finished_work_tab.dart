@@ -17,7 +17,7 @@ class FinishedWork extends StatelessWidget {
       children:[
         Container(
         width: width*.9,
-        height: height*.12,
+        height: height*.08,
         color: Colors.transparent,
         child: Column(
           children: [

@@ -184,8 +184,8 @@ class CodingQuiz extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
-          height: 190,
-          width: 120,
+          height: 220,
+          width: 140,
           padding: EdgeInsets.all(0),
           decoration: BoxDecoration(
             //color: Colors.white.withOpacity(0.3),
@@ -226,10 +226,10 @@ class CodingQuiz extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left:8.0),
                 child: Container(
-                  height: 16,
+                  height: 26,
                   alignment: Alignment.topLeft,
                   child: Container(
-                    height:16,
+                    height:26,
                     width:40,
                     decoration: BoxDecoration(
                         color: Color(0xff52518E),
@@ -296,8 +296,8 @@ class CodingQuiz extends StatelessWidget {
                 height: 22,
                 alignment: Alignment.center,
                 child: Container(
-                  height:22,
-                  width:77,
+                  height:30,
+                  width:85,
                   decoration: BoxDecoration(
                       color: Color(0xff5D73C3),
                       borderRadius: BorderRadius.circular(20.0),
@@ -337,7 +337,7 @@ class FeaturedCourse extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
           height: 190,
-          width: 102,
+          width: 122,
           padding: EdgeInsets.all(0),
           decoration: BoxDecoration(
             //color: Colors.white.withOpacity(0.3),
@@ -427,8 +427,8 @@ class FeaturedCourse extends StatelessWidget {
                 height: 22,
                 alignment: Alignment.center,
                 child: Container(
-                  height:22,
-                  width:77,
+                  height:30,
+                  width:85,
                   decoration: BoxDecoration(
                       color: Color(0xff5D73C3),
                       borderRadius: BorderRadius.circular(20.0),

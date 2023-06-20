@@ -21,6 +21,110 @@ class _ApplyNowPageState extends State<ApplyNowPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.all(15),
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/elements/backg.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: SingleChildScrollView(
+
+            child: Column(
+              children: [
+                Row(children: [
+                  IconButton(
+                      onPressed: (){Navigator.pop(context);},
+                      icon: Icon(Icons.arrow_back_ios_outlined,color: Colors.white,)
+                  ),
+                  SizedBox(width: width*.34,),
+                  IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.search,color: Colors.white,)
+                  ),
+                  IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.favorite,color: Colors.white,)
+                  ),
+                  IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.shopping_cart,color: Colors.white,)
+                  ),
+                  IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.person,color: Colors.white,)
+                  ),
+                ],),
+                ApplyNowHeader(),
+                SizedBox(height: height*.02,),
+                Column(
+                  children: [
+                    Text(
+                      "Purchase Our Signature",
+                      style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.w700,fontFamily: "Montserrat"),),
+                    Text(
+                      "Coding Classes",
+                      style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.w700,fontFamily: "Montserrat"),),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  height: height * .6,
+                  width: width * .95,
+                  child: ListView.builder(
+                      itemCount: Course.courseList.length,
+                      scrollDirection: Axis.vertical,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Stack(children:[
+                          GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => DetailPage(index: index)),
+                                );
+                              },
+                              child: CourseTile(index: index,)
+                          ),
+                          Positioned(
+                              bottom: 0,
+                              right: 20,
+                              child:  GestureDetector(
+                                onTap: (){
+                                  setState(() {
+                                    Course.courseList[index].isFavorated=!Course.courseList[index].isFavorated;
+                                  });
+                                },
+                                child: Icon(
+                                  Course.courseList[index].isFavorated?
+                                  Icons.favorite:
+                                  Icons.favorite_border,
+                                  color: Course.courseList[index].isFavorated?
+                                  Color(0xff5D73C3):Colors.white,
+                                ),
+                              )
+                          ),
+                        ]);
+                      }),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+
+
+
+
+
+
+      Scaffold(
       backgroundColor: Colors.transparent,
 
       body:SingleChildScrollView(

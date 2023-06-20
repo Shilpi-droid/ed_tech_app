@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skido/pages/Mentor/mentor_list_page.dart';
 import 'package:skido/pages/working_proffessional_page1.dart';
 import 'package:skido/ui.dart';
 import 'package:skido/widgets/buttons.dart';
@@ -9,6 +10,8 @@ import 'package:skido/widgets/categories.dart';
 import 'package:skido/widgets/ment.dart';
 import 'package:skido/widgets/skillblog.dart';
 import 'package:skido/widgets/testysk.dart';
+
+import '../MentorIntro/mentors_page.dart';
 
 class WorkingProf extends StatefulWidget {
   const WorkingProf({Key? key}) : super(key: key);
@@ -23,9 +26,11 @@ class _WorkingProfState extends State<WorkingProf> {
     final width=MediaQuery.of(context).size.width;
     return Container(
       height: double.maxFinite,
+
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/elements/backg.png'),
+          fit: BoxFit.cover
         ),
       ),
       child: Scaffold(
@@ -167,7 +172,12 @@ class _WorkingProfState extends State<WorkingProf> {
                                 // TransPButton(text: 'Meet our\nMentors', height: 52, width: 98, fsize: 15),
                                 // SizedBox(width: 8),
                                 // TransPButton(text: 'Read &\nProceed', height: 52, width: 98, fsize: 15),
-                                GlassButton(text: 'Meet our\nMentors', onPressed: (){}),
+                                GlassButton(text: 'Meet our\nMentors', onPressed: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) =>  MentorListPage()),
+                                  );
+                                }),
                                 SizedBox(width: 8),
                                 GlassButton(text: 'Read &\nProceed', onPressed: (){}),
                               ],
@@ -254,17 +264,19 @@ class _WorkingProfState extends State<WorkingProf> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    height: 160,
+                    height: 175,
                     width: width-30,
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       children: [
+                        SizedBox(width: 10),
                         TestSkillCard(cname: 'Digital\nMarketing', rem: '10 Test Available'),
                         SizedBox(width: 10),
                         TestSkillCard(cname: 'Data Science', rem: '10 Test Available'),
                         SizedBox(width: 10),
-                        TestSkillCard(cname: 'Product\nManagement', rem: '10 Test Available'),
+                        TestSkillCard(cname: 'Product\nMgt.', rem: '10 Test Available'),
+                        SizedBox(width: 10),
                       ],
                     ),
                   ),

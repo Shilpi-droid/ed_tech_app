@@ -11,7 +11,7 @@ class Timeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardUI(
-        height: 151,
+        height: 131,
         width: 178,
         child: Center(
           child: Column(
@@ -23,20 +23,20 @@ class Timeline extends StatelessWidget {
                   color: Colors.white,
                   //fontFamily: "Montserrat",
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 17,
                 ),
               ),
               SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Text(
                   text,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(
                     color: Colors.white,
                     //fontFamily: "Montserrat",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
                   ),
                 ),
               ),

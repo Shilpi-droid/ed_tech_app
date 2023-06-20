@@ -45,6 +45,8 @@ dependencies:
   shared_preferences: ^2.1.2
   jwt_decoder: ^2.0.1
   jwt_decode: ^0.3.1
+  table_calendar: ^3.0.9
+  day_night_time_picker: ^1.2.0+2
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +89,7 @@ flutter:
      - assets/InterviewRole/
      - assets/GoogleInt/
      - assets/Interview/
+     - assets/MentorPage/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

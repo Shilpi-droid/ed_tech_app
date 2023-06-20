@@ -17,7 +17,7 @@ class AwardCard extends StatelessWidget {
     final width=MediaQuery.of(context).size.width;
 
     return CardUI(
-      height: 150, width: width-30,
+      height: 190, width: width-30,
         child:Column(
           children: [
             Text(

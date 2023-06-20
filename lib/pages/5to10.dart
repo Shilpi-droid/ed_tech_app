@@ -57,7 +57,7 @@ class _Fiveto10State extends State<Fiveto10> {
                   SizedBox(height: 10),
                   // CodingCourse510(image: 'assets/5-10/5-10cc1.png', heading: 'MERN Stack', buttontxt: 'MERN Stack', time: '140', mrp: '599'),
                   Container(
-                    height: 120,
+                    height: 125,
                     width: width - 30,
                     child: ListView(
                       shrinkWrap: true,
@@ -75,9 +75,9 @@ class _Fiveto10State extends State<Fiveto10> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TransPButtonDrop(text: 'Grade', height: 21, width: 76),
+                      TransPButtonDrop(text: 'Grade', height: 26, width: 82),
                       SizedBox(width: 15),
-                      TransPButtonDrop(text: 'All Languages', height: 21, width: 108),
+                      TransPButtonDrop(text: 'All Languages', height: 26, width: 108),
                     ],
                   ),
 
@@ -92,7 +92,7 @@ class _Fiveto10State extends State<Fiveto10> {
                     ),
                   ),
                   Container(
-                    height: 117,
+                    height: 120,
                     width: width - 30,
                     child: ListView(
                       shrinkWrap: true,
@@ -134,9 +134,9 @@ class _Fiveto10State extends State<Fiveto10> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TransPButtonDrop(text: 'Grade', height: 21, width: 76),
+                      TransPButtonDrop(text: 'Grade', height: 26, width: 82),
                       SizedBox(width: 15),
-                      TransPButtonDrop(text: 'Tutor', height: 21, width: 76),
+                      TransPButtonDrop(text: 'Tutor', height: 26, width: 82),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -151,7 +151,7 @@ class _Fiveto10State extends State<Fiveto10> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    height: 120,
+                    height: 125,
                     width: width - 30,
                     child: ListView(
                       shrinkWrap: true,
@@ -170,9 +170,9 @@ class _Fiveto10State extends State<Fiveto10> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TransPButtonDrop(text: 'Grade', height: 21, width: 76),
+                      TransPButtonDrop(text: 'Grade', height: 26, width: 82),
                       SizedBox(width: 15),
-                      TransPButtonDrop(text: 'Course Name', height: 21, width: 108),
+                      TransPButtonDrop(text: 'Course Name', height: 26, width: 108),
                     ],
                   ),
                   SizedBox(height: 10),
@@ -186,7 +186,7 @@ class _Fiveto10State extends State<Fiveto10> {
                     ),
                   ),
                   Container(
-                    height: 110,
+                    height: 115,
                     width: width - 30,
                     child: ListView(
                       shrinkWrap: true,
@@ -224,7 +224,7 @@ class _Fiveto10State extends State<Fiveto10> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    height: 190,
+                    height: 220,
                     width: width - 30,
                     child: ListView(
                       shrinkWrap: true,
@@ -250,7 +250,7 @@ class _Fiveto10State extends State<Fiveto10> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    height: 127,
+                    height: 135,
                     width: width - 30,
                     child: ListView(
                       shrinkWrap: true,
@@ -356,7 +356,7 @@ class _Fiveto10State extends State<Fiveto10> {
                           day: 'Saturday',
                           time: '9AM - 12PM'
                       ),
-                      SizedBox(width: 20),
+                      SizedBox(width: 10),
                       UpcEve(
                           desc: 'Celebrating Yoga & all the social & health benefits we can enjoy through it’s practice',
                           image: 'assets/5-10/ue1.png',
@@ -365,7 +365,7 @@ class _Fiveto10State extends State<Fiveto10> {
                           day: 'Saturday',
                           time: '9AM - 12PM'
                       ),
-                      SizedBox(width: 20),
+                      SizedBox(width: 10),
                       UpcEve(
                           desc: "Rotary Club of Nagpur Vision is one of central India's premier service organizations engaged in....Read More",
                           image: 'assets/5-10/ue3.png',
@@ -387,13 +387,13 @@ class _Fiveto10State extends State<Fiveto10> {
                     ),
                   ),
                   Container(
-                    height: 92,
-                    width: 290,
+                    height: 100,
+                    width: 300,
                     child: Stack(
                       children: [
                         Container(
-                          height: 92,
-                          width: 290,
+                          height: 100,
+                          width: 300,
                           child: Column(
                             children: [
                               SizedBox(height: 11),
@@ -405,8 +405,8 @@ class _Fiveto10State extends State<Fiveto10> {
                                     child: BackdropFilter(
                                       filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                                       child: Container(
-                                        height: 75,
-                                        width: 243,
+                                        height: 83,
+                                        width: 253,
                                         decoration: BoxDecoration(
                                           //color: Colors.white.withOpacity(0.3),
                                           gradient: LinearGradient(
@@ -482,7 +482,7 @@ class _Fiveto10State extends State<Fiveto10> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    height: 96,
+                    height: 104,
                     width: width - 30,
                     child: ListView(
                       shrinkWrap: true,
@@ -496,13 +496,13 @@ class _Fiveto10State extends State<Fiveto10> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TransPButtonDrop(text: 'Grade', height: 21, width: 76),
+                      TransPButtonDrop(text: 'Grade', height: 26, width: 82),
                       SizedBox(width: 5),
-                      TransPButtonDrop(text: 'Choose', height: 21, width: 79),
+                      TransPButtonDrop(text: 'Choose', height: 26, width: 85),
                     ],
                   ),
                   SizedBox(height: 50),
@@ -516,12 +516,12 @@ class _Fiveto10State extends State<Fiveto10> {
                     ),
                   ),
                   Container(
-                    height: 170,
+                    height: 180,
                     width: width-30,
                     child: Stack(
                       children: [
                         Container(
-                          height: 170,
+                          height: 180,
                           width: width-30,
                           child: Column(
                             children: [
@@ -533,7 +533,7 @@ class _Fiveto10State extends State<Fiveto10> {
                                     child: BackdropFilter(
                                       filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                                       child: Container(
-                                        height: 137,
+                                        height: 147,
                                         width: 326,
                                         decoration: BoxDecoration(
                                           //color: Colors.white.withOpacity(0.3),
@@ -579,7 +579,7 @@ class _Fiveto10State extends State<Fiveto10> {
                           child: Container(
                             // color: Colors.red,
                             width: 98,
-                            height: 169,
+                            height: 179,
                             child: Image(
                               image: AssetImage('assets/5-10/findschool.png'),
                               fit: BoxFit.fill,

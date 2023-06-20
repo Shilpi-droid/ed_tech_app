@@ -11,8 +11,8 @@ class TestSkillCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardUI(
-        height: 140,
-        width: 125,
+        height: 155,
+        width: 140,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +27,7 @@ class TestSkillCard extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Text(
               rem,
               textAlign: TextAlign.center,
@@ -38,7 +38,7 @@ class TestSkillCard extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 10),
             ConnectBtn(text: 'Show more\nRoles')
           ],
         )

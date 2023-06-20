@@ -52,11 +52,53 @@ class ConnectBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 22,
+      height: 35,
       alignment: Alignment.center,
       child: Container(
-        height:22,
-        width:77,
+        height:35,
+        width:80,
+        decoration: BoxDecoration(
+            color: Color(0xff5D73C3),
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 5,
+                //blurStyle: BlurStyle.outer,
+                offset: Offset(0.0,5.0),
+              )
+            ]
+        ),
+        child: Center(
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.montserrat(
+              color: Colors.white,
+              //fontFamily: "Montserrat",
+              fontWeight: FontWeight.w400,
+              fontSize: 10,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ConnectBtn2 extends StatelessWidget {
+  final String text;
+
+  ConnectBtn2({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 35,
+      alignment: Alignment.center,
+      child: Container(
+        height:30,
+        width:78,
         decoration: BoxDecoration(
             color: Color(0xff5D73C3),
             borderRadius: BorderRadius.circular(20.0),

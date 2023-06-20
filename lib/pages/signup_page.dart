@@ -26,29 +26,30 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _isNotValidate = false;
 
   void registerUser() async{
-      if(_pdController!=_cpdController){
-        setState(() {
-          _isNotValidate = true;
-        });
-      }
-
-      else if(_emailController.text.isNotEmpty && _pdController.text.isNotEmpty){
-      var regBody = {
-        "email":_emailController.text,
-        "password":_pdController.text
-      };
-      var response = await http.post(Uri.parse(registration),
-          headers: {"Content-Type":"application/json"},
-          body: jsonEncode(regBody)
-      );
-      var jsonResponse = jsonDecode(response.body);
-      print(jsonResponse['status']);
-      if(jsonResponse['status']){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
-      }else{
-        print("SomeThing Went Wrong");
-      }
-    }else{
+      if(_emailController.text.isNotEmpty && _pdController.text.isNotEmpty && _fnController.text.isNotEmpty && _lnController.text.isNotEmpty ){
+        var regBody = {
+          "first_name": _fnController.text,
+          "last_name":_lnController.text,
+          "email":_emailController.text,
+          "password":_pdController.text,
+        };
+        var response = await http.post(Uri.parse(signup),
+            headers: {"Content-Type":"application/json"},
+            body: jsonEncode(regBody)
+        );
+        var jsonResponse = jsonDecode(response.body);
+        print(jsonResponse);
+        if(jsonResponse['status']){
+          final snackBar = SnackBar(
+            content: Text('User Signed Up Successfully'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+        }else{
+          print("SomeThing Went Wrong");
+        }
+    }
+      else{
       setState(() {
         _isNotValidate = true;
       });
@@ -322,61 +323,61 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
 
                     SizedBox(height: 15,),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: GestureDetector(
-                        onTap: (){},
-                        child: Container(
-                          width: width*.8,
-                          height: height*.06 ,
-                          color: Colors.transparent,
-                          child: Stack(
-
-                            children: [
-
-                              Container(
-                                decoration: BoxDecoration(
-                                    border:Border.all(color: Colors.white.withOpacity(0.18)),
-                                    borderRadius: BorderRadius.circular(15),
-                                    gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          Colors.white.withOpacity(0.4),
-                                          Colors.white.withOpacity(0.08),
-                                        ]
-                                    )
-                                ),
-                              ),
-                              BackdropFilter(
-                                  filter: ImageFilter.blur(
-                                    sigmaY: 3,
-                                    sigmaX: 3,
-                                  ),
-                                  child:Stack(
-                                      children:[ TextFormField(
-                                        controller: _cpdController,
-                                        onChanged: (text) {},
-                                        decoration: InputDecoration(
-                                          hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
-                                          hintText: 'Confirm Password',
-                                          border: InputBorder.none,
-                                          errorStyle: TextStyle(color: Colors.white),
-                                          errorText: _isNotValidate ? "Enter Proper Info" : null,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 40, vertical: 10),
-                                        ),
-                                        style: TextStyle(color: Colors.white70),
-                                      ),]
-                                  )
-
-                              ),
-
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    // ClipRRect(
+                    //   borderRadius: BorderRadius.circular(15),
+                    //   child: GestureDetector(
+                    //     onTap: (){},
+                    //     child: Container(
+                    //       width: width*.8,
+                    //       height: height*.06 ,
+                    //       color: Colors.transparent,
+                    //       child: Stack(
+                    //
+                    //         children: [
+                    //
+                    //           Container(
+                    //             decoration: BoxDecoration(
+                    //                 border:Border.all(color: Colors.white.withOpacity(0.18)),
+                    //                 borderRadius: BorderRadius.circular(15),
+                    //                 gradient: LinearGradient(
+                    //                     begin: Alignment.topCenter,
+                    //                     end: Alignment.bottomCenter,
+                    //                     colors: [
+                    //                       Colors.white.withOpacity(0.4),
+                    //                       Colors.white.withOpacity(0.08),
+                    //                     ]
+                    //                 )
+                    //             ),
+                    //           ),
+                    //           BackdropFilter(
+                    //               filter: ImageFilter.blur(
+                    //                 sigmaY: 3,
+                    //                 sigmaX: 3,
+                    //               ),
+                    //               child:Stack(
+                    //                   children:[ TextFormField(
+                    //                     controller: _cpdController,
+                    //                     onChanged: (text) {},
+                    //                     decoration: InputDecoration(
+                    //                       hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
+                    //                       hintText: 'Confirm Password',
+                    //                       border: InputBorder.none,
+                    //                       errorStyle: TextStyle(color: Colors.white),
+                    //                       errorText: _isNotValidate ? "Enter Proper Info" : null,
+                    //                       contentPadding: EdgeInsets.symmetric(
+                    //                           horizontal: 40, vertical: 10),
+                    //                     ),
+                    //                     style: TextStyle(color: Colors.white70),
+                    //                   ),]
+                    //               )
+                    //
+                    //           ),
+                    //
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
 
 
 

@@ -54,6 +54,7 @@ class _SignInPageState extends State<SignInPage> {
       if(jsonResponse['status']){
         var myToken = jsonResponse['token'];
         var name  = jsonResponse['name'];
+        var cookie = jsonResponse['cookie'];
         prefs.setString('token', myToken);
         // String name = jsonResponse['_name'];
         // print(name);

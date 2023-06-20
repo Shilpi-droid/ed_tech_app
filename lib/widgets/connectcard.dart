@@ -13,15 +13,15 @@ class ConnectCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 92,
-          width: 183,
+          height: 105,
+          width: 195,
           child: Row(
             //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(width: 35),
               CardUI(
-                  height: 84,
-                  width: 147,
+                  height: 97,
+                  width: 159,
                   child: Row(
                     children: [
                       SizedBox(width: 37),
@@ -50,7 +50,7 @@ class ConnectCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 8,),
-                          ConnectBtn(text: 'Connect')
+                          ConnectBtn2(text: 'Connect')
                         ],
                       )
                     ],
@@ -62,10 +62,11 @@ class ConnectCard extends StatelessWidget {
         Align(
             alignment: AlignmentDirectional.topStart,
             child: Container(
-              height: 92,
+              height: 105,
               width: 77,
               child: Image(
                 image: AssetImage(image),
+                //fit: BoxFit.fitHeight,
               ),
             )
         )

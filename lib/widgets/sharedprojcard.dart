@@ -16,8 +16,8 @@ class SharedProj extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
-          height: 200,
-          width: 130,
+          height: 220,
+          width: 140,
           padding: EdgeInsets.all(4),
           decoration: BoxDecoration(
 //color: Colors.white.withOpacity(0.3),
@@ -59,11 +59,11 @@ class SharedProj extends StatelessWidget {
               ),
               SizedBox(height: 6),
               Container(
-                width: 113,
+                width: 133,
                 height: 70,
                 child: Stack(
                   children: [
-                    Image(image: AssetImage(image),),
+                    Center(child: Image(image: AssetImage(image),fit: BoxFit.fitHeight,)),
                     Align(
                       alignment: AlignmentDirectional.topStart,
                       child: Container(
@@ -78,9 +78,9 @@ class SharedProj extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 6),
-              TransPButton(text: 'More Details', height: 15, width: 67, fsize: 8,),
+              TransPButton(text: 'More Details', height: 20, width: 75, fsize: 8,),
               SizedBox(height: 6),
-              TransPButton(text: 'Project Guide', height: 15, width: 67, fsize: 8,),
+              TransPButton(text: 'Project Guide', height: 20, width: 75, fsize: 8,),
             ],
           ),
         ),

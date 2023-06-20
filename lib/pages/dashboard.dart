@@ -220,7 +220,7 @@ class LandingPage extends StatelessWidget {
                 //         text: 'HI')
                 // ),
                 Container(
-                  height:160,
+                  height:170,
                   width: width-30,
                   child: ListView(
                       shrinkWrap: true,
@@ -313,7 +313,7 @@ class LandingPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Container(
-                  height:180,
+                  height:220,
                   width: width-30,
                   child: ListView(
                       shrinkWrap: true,

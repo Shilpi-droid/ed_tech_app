@@ -64,8 +64,8 @@ class Section extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
-          height: 21,
-          width: 78,
+          height: 25,
+          width: 83,
           decoration: BoxDecoration(
             //color: Colors.white.withOpacity(0.3),
             gradient: LinearGradient(
@@ -113,8 +113,8 @@ class RolesCat extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
-          height: 21,
-          width: 99,
+          height: 25,
+          width: 105,
           decoration: BoxDecoration(
             //color: Colors.white.withOpacity(0.3),
             gradient: LinearGradient(
@@ -235,6 +235,7 @@ class ASQSubTopics extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(text,
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
                       fontSize: 5,
                       fontWeight: FontWeight.w500,

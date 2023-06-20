@@ -110,7 +110,7 @@ class CustomCard extends StatelessWidget {
     double progress = marksObtained / marksTotal;
     final width = MediaQuery.of(context).size.width;
     return CardUI(
-    height: 250, width: width-30,
+    height: 290, width: width-30,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

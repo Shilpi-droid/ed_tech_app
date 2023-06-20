@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Row(
                     children: [
                       Container(
-                        height: 250,
+                        height: 290,
                         width: width-30,
                         child: ListView(
                           shrinkWrap: true,
@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   SizedBox(height: 20),
                   Container(
-                    height: 168,
+                    height: 208,
                     width: width-30,
                     child: ListView(
                       shrinkWrap: true,
@@ -105,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    height:151,
+                    height:131,
                     // width: width-30,
                     child: ListView(
                       shrinkWrap: true,
@@ -137,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         UpcomingEvent(
-                            logoImage: 'assets/elements/mainlogo.png',
+                            logoImage: 'assets/Landing_page/mainlogo.png',
                             heading: "Ask a digital marketing pro",
                             description: "Get your digital marketing questions answered by an industry expert",
                             status: "LIVE",

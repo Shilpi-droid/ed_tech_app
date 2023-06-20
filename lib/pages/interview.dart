@@ -76,8 +76,8 @@ class Interview extends StatelessWidget {
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                       child: Container(
-                        height: 24,
-                        width: 178,
+                        height: 30,
+                        width: 185,
                         decoration: BoxDecoration(
                           //color: Colors.white.withOpacity(0.3),
                           gradient: LinearGradient(
@@ -113,12 +113,12 @@ class Interview extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: 128,
+                    height: 150,
                     width: width-30-20,
                     child: Stack(
                       children: [
                         Container(
-                          height: 128,
+                          height: 150,
                           width: width-30,
                           child: Column(
                             children: [
@@ -131,7 +131,7 @@ class Interview extends StatelessWidget {
                                     child: BackdropFilter(
                                       filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                                       child: Container(
-                                        height: 73,
+                                        height: 95,
                                         width: 241,
                                         decoration: BoxDecoration(
                                           //color: Colors.white.withOpacity(0.3),
@@ -498,7 +498,7 @@ class Interview extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        height: 270,
+                        height: 280,
                         width: 147,
                         child: Column(
                           children: [
@@ -527,7 +527,7 @@ class Interview extends StatelessWidget {
                       ),
                       SizedBox(width:20),
                       Container(
-                        height: 270,
+                        height: 280,
                         width: 147,
                         child: Column(
                           children: [

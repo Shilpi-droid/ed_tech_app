@@ -10,15 +10,15 @@ class CodingCourse510 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
-      width: 108,
+      height: 125,
+      width: 115,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(17),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           child: Container(
-            height: 120,
-            width: 108,
+            height: 125,
+            width: 115,
             padding: EdgeInsets.all(0),
             decoration: BoxDecoration(
               //color: Colors.white.withOpacity(0.3),
@@ -51,8 +51,8 @@ class CodingCourse510 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        height:13,
-                        width:54,
+                        height:15,
+                        width:58,
                         decoration: BoxDecoration(
                             color: Color(0xff52518E),
                             borderRadius: BorderRadius.circular(20.0),
@@ -174,13 +174,13 @@ class Test1510 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 117,
-      width: 205,
+      height: 120,
+      width: 220,
       child: Stack(
         children: [
           Container(
-            height: 117,
-            width: 205,
+            height: 120,
+            width: 220,
             child: Column(
               children: [
                 SizedBox(height: 17),
@@ -192,8 +192,8 @@ class Test1510 extends StatelessWidget {
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                         child: Container(
-                          height: 100,
-                          width: 164,
+                          height: 103,
+                          width: 179,
                           decoration: BoxDecoration(
                             //color: Colors.white.withOpacity(0.3),
                             gradient: LinearGradient(
@@ -265,12 +265,12 @@ class PrivateTut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 131,
+      height: 151,
       width: 292,
       child: Stack(
         children: [
           Container(
-            height: 131,
+            height: 151,
             width: 292,
             child: Column(
               children: [
@@ -283,7 +283,7 @@ class PrivateTut extends StatelessWidget {
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                         child: Container(
-                          height: 65,
+                          height: 85,
                           width: 268,
                           decoration: BoxDecoration(
                             //color: Colors.white.withOpacity(0.3),
@@ -346,27 +346,27 @@ class Test2510 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110,
-      width: 207,
+      height: 115,
+      width: 212,
       child: Stack(
         children: [
           Container(
-            height: 110,
-            width: 207,
+            height: 115,
+            width: 212,
             // color: Colors.red,
             child: Column(
               children: [
                 SizedBox(height: 10),
                 Row(
                   children: [
-                    SizedBox(width: 39),
+                    SizedBox(width: 30),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                         child: Container(
-                            height: 100,
-                            width: 167,
+                            height: 105,
+                            width: 182,
                             decoration: BoxDecoration(
                               //color: Colors.white.withOpacity(0.3),
                               gradient: LinearGradient(
@@ -389,7 +389,7 @@ class Test2510 extends StatelessWidget {
                                   Column(
                                     children: [
                                       Container(
-                                        width: 120,
+                                        width: 125,
                                         child: Text(
                                           text,
                                           style: GoogleFonts.montserrat(
@@ -402,7 +402,7 @@ class Test2510 extends StatelessWidget {
                                       ),
                                       SizedBox(height: 25),
                                       Container(
-                                        width: 120,
+                                        width: 125,
                                         child: Text(
                                           '$name | Class $classno th | $school',
                                           style: GoogleFonts.montserrat(
@@ -450,14 +450,14 @@ class Test3510 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 127,
-      width: 204,
+      height: 135,
+      width: 210,
       // color: Colors.red,
       child: Stack(
         children: [
           Container(
-            height: 127,
-            width: 204,
+            height: 135,
+            width: 210,
             child: Column(
               children: [
                 SizedBox(height: 9),
@@ -469,8 +469,8 @@ class Test3510 extends StatelessWidget {
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                         child: Container(
-                          height: 100,
-                          width: 152,
+                          height: 108,
+                          width: 158,
                           decoration: BoxDecoration(
                             //color: Colors.white.withOpacity(0.3),
                             gradient: LinearGradient(
@@ -547,7 +547,7 @@ class UpcEve extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
-          height: 143,
+          height: 160,
           width: 97,
           decoration: BoxDecoration(
             //color: Colors.white.withOpacity(0.3),
@@ -641,11 +641,11 @@ class ReadingMat extends StatelessWidget {
           ),
           SizedBox(height: 7),
           Container(
-            height: 22,
+            height: 30,
             alignment: Alignment.center,
             child: Container(
-              height:22,
-              width:77,
+              height:30,
+              width:85,
               decoration: BoxDecoration(
                   color: Color(0xff5D73C3),
                   borderRadius: BorderRadius.circular(20.0),

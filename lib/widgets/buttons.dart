@@ -78,7 +78,7 @@ class GlassButton extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: SizedBox(
             height: 50,
-            width: 100,
+            width: 115,
             child: ElevatedButton(
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
@@ -90,8 +90,8 @@ class GlassButton extends StatelessWidget {
                 padding: EdgeInsets.zero,
               ),
               child: Container(
-                height: 55,
-                width: 100,
+                height: 50,
+                width: 115,
                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(

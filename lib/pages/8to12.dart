@@ -153,16 +153,21 @@ class _Eightto12State extends State<Eightto12> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Row(
+                  Container(
+                    height: 190,
                     //crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FeaturedCourse(image: 'assets/8to12/fc1.png', heading: 'Intoduction to Scratch Programming', buttontxt: 'Scratch', grade: '1-8', level: 'Beginner'),
-                      SizedBox(width: 10),
-                      FeaturedCourse(image: 'assets/8to12/fc2.png', heading: 'Intoduction to Application Development', buttontxt: 'App Lab', grade: '1-8', level: 'Beginner'),
-                      SizedBox(width: 10),
-                      FeaturedCourse(image: 'assets/8to12/fc3.png', heading: 'Intoduction to Scratch Programming', buttontxt: 'Scratch', grade: '1-8', level: 'Beginner'),
-                    ],
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        FeaturedCourse(image: 'assets/8to12/fc1.png', heading: 'Intoduction to Scratch Programming', buttontxt: 'Scratch', grade: '1-8', level: 'Beginner'),
+                        SizedBox(width: 10),
+                        FeaturedCourse(image: 'assets/8to12/fc2.png', heading: 'Intoduction to Application Development', buttontxt: 'App Lab', grade: '1-8', level: 'Beginner'),
+                        SizedBox(width: 10),
+                        FeaturedCourse(image: 'assets/8to12/fc3.png', heading: 'Intoduction to Scratch Programming', buttontxt: 'Scratch', grade: '1-8', level: 'Beginner'),
+                      ],
+                    ),
+
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -241,7 +246,7 @@ class _Eightto12State extends State<Eightto12> {
                   SizedBox(height: 10),
                   Container(
                     width: width - 30,
-                    height: 200,
+                    height: 220,
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,

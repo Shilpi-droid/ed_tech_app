@@ -13,19 +13,19 @@ class Division extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width:130,
+      width:150,
       child: Stack(
         //alignment: Alignment.topCenter,
         children: [
           Column(
             children: [
-              SizedBox(height:40),
+              SizedBox(height:30),
               CardUI(
-                height:120,
-                width: 130,
+                height:140,
+                width: 150,
                 child: Container(
-                  width: 120.0,  // Adjust the width as needed
-                  height: 130.0,  // Adjust the height as needed
+                  width: 150.0,  // Adjust the width as needed
+                  height: 140.0,  // Adjust the height as needed
                   color: Colors.transparent,  // Adjust the color and opacity as needed
                   child:Column(
                     children: [
@@ -39,10 +39,11 @@ class Division extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(height:10),
+                       SizedBox(height:10),
                       Text(
                         descp,
                         textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.montserrat(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
@@ -88,11 +89,11 @@ class Division1 extends StatelessWidget {
             children: [
               SizedBox(height:40),
               CardUI(
-                height:140,
+                height:180,
                 width: width-30,
                 child: Container(
                   width: width-30 , // Adjust the width as needed
-                  height: 140,  // Adjust the height as needed
+                  height: 180,  // Adjust the height as needed
                   color: Colors.transparent,  // Adjust the color and opacity as needed
                   child:Column(
                     children: [
@@ -164,11 +165,11 @@ class Testimonials extends StatelessWidget {
             children: [
               SizedBox(height:20),
               CardUI(
-                height:147,
+                height:167,
                 width: width-30-185,
                 child: Container(
                   width: width-30-185 , // Adjust the width as needed
-                  height: 147,  // Adjust the height as needed
+                  height: 167,  // Adjust the height as needed
                   color: Colors.transparent,  // Adjust the color and opacity as needed
                   child:Column(
                     children: [
@@ -201,6 +202,7 @@ class Testimonials extends StatelessWidget {
                       Text(
                         descp,
                         textAlign: TextAlign.center,
+                        // overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.montserrat(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
@@ -249,11 +251,11 @@ class MentorCard extends StatelessWidget {
             children: [
               SizedBox(height:20),
               CardUI(
-                height:180,
+                height:220,
                 width: width-30,
                 child: Container(
                   width: width-30,  // Adjust the width as needed
-                  height: 180.0,  // Adjust the height as needed
+                  height: 220,  // Adjust the height as needed
                   color: Colors.transparent,  // Adjust the color and opacity as needed
                   child:Row(
                     children: [
@@ -294,7 +296,8 @@ class MentorCard extends StatelessWidget {
           Align(
             alignment: AlignmentDirectional.topStart,
             child: Container(
-              height: 215,
+              height: 250,
+              width: 150,
               child: Image.asset(
                 imageUrl,
                 fit: BoxFit.cover,
@@ -317,7 +320,7 @@ class CourseCat extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Container(
-      width:160,
+      width:170,
       child: Stack(
         //alignment: Alignment.topCenter,
         children: [
@@ -325,11 +328,11 @@ class CourseCat extends StatelessWidget {
             children: [
               SizedBox(height:40),
               CardUI(
-                height:116,
-                width: 160,
+                height:136,
+                width: 170,
                 child: Container(
-                  width: 160 , // Adjust the width as needed
-                  height: 116,  // Adjust the height as needed
+                  width: 170 , // Adjust the width as needed
+                  height: 136,  // Adjust the height as needed
                   color: Colors.transparent,  // Adjust the color and opacity as needed
                   child:Column(
                     children: [
@@ -353,7 +356,7 @@ class CourseCat extends StatelessWidget {
                           fontSize: 7,
                         ),
                       ),
-                      SizedBox(height:5),
+                      SizedBox(height:20),
                       Text(
                         "Link",
                         textAlign: TextAlign.center,

@@ -144,93 +144,97 @@ class _GoogleIntState extends State<GoogleInt> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Stack(
-                    children: [
-                      Container(
-                        height: 259,
-                        width: width-30,
-                        child: Column(
-                          children: [
-                            SizedBox(height: 34),
-                            Row(
-                              children: [
-                                SizedBox(width: 45),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                                    child: Container(
-                                      height: 162,
-                                      width: 302,
-                                      decoration: BoxDecoration(
-                                        //color: Colors.white.withOpacity(0.3),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Colors.white.withOpacity(0.4),
-                                            Colors.white.withOpacity(0.1),
-                                          ],
-                                          begin:Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          stops: [0.2,0.8],
-                                        ),
-                                        borderRadius: BorderRadius.circular(8.0),
-                                        border: Border.all(color:Colors.white, width: 0.4),
-                                      ),
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                "For more detailed Questions",
-                                                textAlign: TextAlign.right,
-                                                style: GoogleFonts.montserrat(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              SizedBox(height: 7),
-                                              Text(
-                                                'Connect with our Mentors',
-                                                textAlign: TextAlign.right,
-                                                style: GoogleFonts.montserrat(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              SizedBox(height: 40),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: [
-                                                  Categories(text: 'Chat'),
-                                                  SizedBox(width: 10),
-                                                  Categories(text: 'Call'),
-                                                ],
-                                              )
+                  Container(
+                    height: 270,
+                    width: width-30,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 270,
+                          width: width-30,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 34),
+                              Row(
+                                children: [
+                                  SizedBox(width: 45),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                                      child: Container(
+                                        height: 173,
+                                        width: 302,
+                                        decoration: BoxDecoration(
+                                          //color: Colors.white.withOpacity(0.3),
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.white.withOpacity(0.4),
+                                              Colors.white.withOpacity(0.1),
                                             ],
-                                          )
+                                            begin:Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            stops: [0.2,0.8],
+                                          ),
+                                          borderRadius: BorderRadius.circular(8.0),
+                                          border: Border.all(color:Colors.white, width: 0.4),
+                                        ),
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  "For more detailed Questions",
+                                                  textAlign: TextAlign.right,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 7),
+                                                Text(
+                                                  'Connect with our Mentors',
+                                                  textAlign: TextAlign.right,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 45),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Categories(text: 'Chat'),
+                                                    SizedBox(width: 10),
+                                                    Categories(text: 'Call'),
+                                                  ],
+                                                )
+                                              ],
+                                            )
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional.topStart,
-                        child: Container(
-                          width: 127,
-                          height: 210,
-                          child: Image(
-                            image: AssetImage('assets/InterviewRole/interviewrole2.png'),
+                                  )
+                                ],
+                              )
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        Align(
+                          alignment: AlignmentDirectional.topStart,
+                          child: Container(
+                            width: 127,
+                            height: 210,
+                            child: Image(
+                              image: AssetImage('assets/InterviewRole/interviewrole2.png'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

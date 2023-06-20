@@ -234,7 +234,7 @@ class _CommunityState extends State<Community> {
                   ),
                   SizedBox(height: 10,),
                   Container(
-                    height: 92,
+                    height: 105,
                     width: width-30,
                     child: ListView.builder(
                       itemCount: ConnectUsers.ConnectUsersList.length,
