@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skido/Config/config.dart';
 import 'package:skido/pages/signin_page.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+  final token;
+  const Settings({Key? key, required this.token}) : super(key: key);
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -16,27 +18,15 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
 
   void logoutUser() async {
-    var url = Uri.parse(logout);
-    var response = await http.post(url);
-    var jsonResponse = jsonDecode(response.body);
-    if (jsonResponse['status']) {
-      // Clear any locally stored user data
-      // ...
-      print(jsonResponse);
-      const snackBar = SnackBar(
-        content: Text('User Logged Out Successfully'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      // Navigate to the login screen
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const SignInPage()),
-            (route) => false,
-      );
-    } else {
-      // Handle error
-      print('Failed to logout user. Status code: ${response.statusCode}');
-    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignInPage()));
+    final snackBar = SnackBar(
+      content: Text('User Logged Out Successfully'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
 
   @override
   Widget build(BuildContext context) {

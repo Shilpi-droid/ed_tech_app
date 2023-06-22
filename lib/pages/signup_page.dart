@@ -35,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
         };
         var response = await http.post(Uri.parse(signup),
             headers: {"Content-Type":"application/json"},
-            body: jsonEncode(regBody)
+            body: jsonEncode(regBody),
         );
         var jsonResponse = jsonDecode(response.body);
         print(jsonResponse);

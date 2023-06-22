@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skido/pages/dashboard.dart';
 import 'package:skido/pages/signup_page.dart';
@@ -39,6 +40,8 @@ class _SignInPageState extends State<SignInPage> {
   void initSharedPref() async{
     prefs = await SharedPreferences.getInstance();
   }
+
+
   void loginUser() async{
     if(_emailController.text.isNotEmpty && _pdController.text.isNotEmpty){
       var reqBody = {
@@ -53,13 +56,15 @@ class _SignInPageState extends State<SignInPage> {
       print(jsonResponse);
       if(jsonResponse['status']){
         var myToken = jsonResponse['token'];
-        var name  = jsonResponse['name'];
-        var cookie = jsonResponse['cookie'];
+        // var name  = jsonResponse['name'];
+        // Map<String, dynamic> decodedToken = JwtDecoder.decode(myToken);
+        // var name = decodedToken['name'];
         prefs.setString('token', myToken);
         // String name = jsonResponse['_name'];
         // print(name);
         // print('hiiii');
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage(token: myToken, name: name)));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage(token: myToken)));
+
       }else{
         print('Something went wrong');
       }

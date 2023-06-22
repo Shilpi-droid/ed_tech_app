@@ -14,15 +14,35 @@ import 'package:skido/widgets/ongoing.dart';
 import 'community.dart';
 //import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   final String name;
-  final token;
 
-  const LandingPage({required this.name, this.token});
+
+
+  const LandingPage({required this.name});
 
   @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+
+  void initState() {
+    super.initState();
+  }
+  // String greeting = '';
+  // String _generateGreeting() {
+  //   if (widget.name != null) {
+  //     return "Hi " + widget.name!;
+  //   } else {
+  //     return "Hi User";
+  //   }
+  // }
+
+
 
   Widget build(BuildContext context) {
+    //String _greeting = _generateGreeting();
     final height=MediaQuery.of(context).size.height;
     final width=MediaQuery.of(context).size.width;
     return SafeArea(
@@ -38,7 +58,7 @@ class LandingPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Hi ' +name!, style: GoogleFonts.montserrat(
+                    Text("Hi "+widget.name, style: GoogleFonts.montserrat(
                       color: Colors.white,
                       //fontFamily: "Montserrat",
                       fontWeight: FontWeight.bold,
@@ -60,7 +80,7 @@ class LandingPage extends StatelessWidget {
                             onTap: (){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) =>  Community(name: name,)),
+                                MaterialPageRoute(builder: (context) =>  Community(name: widget.name,)),
                               );
                             },
                             child: Icon(Icons.post_add,  size: 25, color: Colors.white, )

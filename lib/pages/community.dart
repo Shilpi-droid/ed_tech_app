@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skido/Config/config.dart';
 import 'package:skido/models/connectusers.dart';
 import 'package:skido/ui.dart';
 import 'package:skido/widgets/categories.dart';
@@ -27,7 +28,7 @@ class _CommunityState extends State<Community> {
     // var url = Uri.parse('http://192.168.0.137:3000/hello');
     // print('${widget.field}');
     var url =
-    Uri.parse('http://192.168.29.151:3000/comm/SomeUsers');
+    Uri.parse(someUsers);
     var response = await http.get(url);
     //print(response.statusCode);
 

@@ -5,4 +5,5 @@ final addtodo = url + 'storeTodo';
 final getToDoList = url + 'getUserTodoList';
 final deleteTodo = url + 'deleteTodo';
 final logout = url + 'user/logout';
+final someUsers = url + 'comm/SomeUsers';
 

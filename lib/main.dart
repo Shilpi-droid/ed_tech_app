@@ -145,73 +145,74 @@ import 'package:skido/widgets/detail_page_widget.dart';
 
 
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   runApp(MyApp(token: prefs.getString('token'),));
-// }
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('token');
-
-  // Check if the token is present and valid
-  bool isValidToken = token != null && JwtDecoder.isExpired(token) == false ;
-
-  String name = '';
-  if (isValidToken) {
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-    name = decodedToken['name'];
-  }
-
-  runApp(MyApp(isValidToken: isValidToken, token: token, name: name));
+  runApp(MyApp(token: prefs.getString('token')));
 }
 
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   String? token = prefs.getString('token');
+//
+//   // Check if the token is present and valid
+//   bool isValidToken = token != null && JwtDecoder.isExpired(token) == false ;
+//
+//   String name = '';
+//   if (isValidToken) {
+//     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+//     name = decodedToken['name'];
+//   }
+//
+//   runApp(MyApp(isValidToken: isValidToken, token: token, name: name));
+// }
+
 // class MyApp extends StatelessWidget {
-//   const MyApp({
-//     Key? key, required bool isValidToken, String? name,
-//   }): super(key: key);
+
+class MyApp extends StatelessWidget {
+  final token;
+  const MyApp({
+    @required this.token,
+    Key? key,
+  }): super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Colors.black,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: (token != null && JwtDecoder.isExpired(token) == false )?MyHomePage(token: token):SplashScreen()
+    );
+  }
+}
+//   final bool isValidToken;
+//   final String name;
+//   final token;
+//
+//   const MyApp({required this.isValidToken, required this.name, this.token});
+//
 //   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
-//         title: 'Flutter Demo',
-//         debugShowCheckedModeBanner: false,
-//         theme: ThemeData(
-//           primaryColor: Colors.black,
-//           visualDensity: VisualDensity.adaptivePlatformDensity,
-//         ),
-//         home: (token != null && JwtDecoder.isExpired(token) == false )?MyHomePage(token: token):SplashScreen()
+//       debugShowCheckedModeBanner: false,
+//       title: 'My App',
+//       theme: ThemeData(
+//         fontFamily: "Montserrat"
+//       ),
+//       home:
+//       //ApplyNowPage()
+//       isValidToken ? MyHomePage(token: token, name : name) : SplashScreen(),
 //     );
 //   }
 // }
 
-class MyApp extends StatelessWidget {
-  final bool isValidToken;
-  final String name;
-  final token;
-
-  const MyApp({required this.isValidToken, required this.name, this.token});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'My App',
-      theme: ThemeData(
-        fontFamily: "Montserrat"
-      ),
-      home:
-      //ApplyNowPage()
-      isValidToken ? MyHomePage(token: token, name : name) : SplashScreen(),
-    );
-  }
-}
-
 class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key, required this.token, required this.name});
+  MyHomePage({super.key, required this.token});
   final token;
-  final String name;
 
 
   @override
@@ -220,6 +221,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  late String userId;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Map<String,dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    userId = jwtDecodedToken['name'];
+  }
+
+  @override
   void _onItemTap(int index) {
     setState(() {
       _selectedIndex = index;
@@ -244,11 +256,11 @@ class _MyHomePageState extends State<MyHomePage> {
         // ),
         body: Center(
           child: [
-            LandingPage(token: widget.token, name: widget.name),
+            LandingPage(name: userId),
             Book(),
             Homework(),
-            Community(name: widget.name),
-            Settings(),
+            Community(name: userId),
+            Settings(token: widget.token,),
           ].elementAt(_selectedIndex),
         ),
         bottomNavigationBar:
@@ -258,17 +270,17 @@ class _MyHomePageState extends State<MyHomePage> {
             topLeft: Radius.circular(18),
           ),
           child: BottomNavigationBar(
-            backgroundColor: Color(0xff151413),
+            backgroundColor: Color.fromRGBO(79, 80, 142, 0.95),
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: true,
             showUnselectedLabels: false,
             unselectedItemColor: Color(0xffD9D9D9),
-            selectedItemColor: Color(0xff1C9C74),
+            selectedItemColor: Color(0xffD9D9D9),
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   activeIcon: Icon(
                     Icons.space_dashboard_rounded,
-                    color: Color(0xff1C9C74),
+                    //color: Color(0xff1C9C74),
                   ),
                   icon: Icon(
                     Icons.space_dashboard_rounded,
@@ -304,8 +316,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
             currentIndex: _selectedIndex,
             onTap: _onItemTap,
-            selectedFontSize: 13.0,
-            unselectedFontSize: 13.0,
+            selectedFontSize: 12.0,
+            unselectedFontSize: 12.0,
           ),
         ),
       ),
