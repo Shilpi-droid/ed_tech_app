@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
+import 'package:skido/Config/services.dart';
 import 'package:skido/pages/signin_page.dart';
+import 'package:skido/pages/verification_link.dart';
 
 import '../Config/config.dart';
 import '../widgets/gmail_facebook_container.dart';
@@ -39,12 +42,13 @@ class _SignUpPageState extends State<SignUpPage> {
         );
         var jsonResponse = jsonDecode(response.body);
         print(jsonResponse);
-        if(jsonResponse['status']){
-          final snackBar = SnackBar(
-            content: Text('User Signed Up Successfully'),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+        if(jsonResponse['sentEmail']){
+          // final snackBar = SnackBar(
+          //   content: Text('User Signed Up Successfully'),
+          // );
+          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          //Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>VerificationLinkHandlerPage(email: _emailController.text,)));
         }else{
           print("SomeThing Went Wrong");
         }
@@ -54,7 +58,12 @@ class _SignUpPageState extends State<SignUpPage> {
         _isNotValidate = true;
       });
     }
+
   }
+
+  // Function for email verification
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       children:[ TextFormField(
                                         controller: _fnController,
                                         onChanged: (text) {},
+                                        cursorColor: Colors.white,
                                         decoration: InputDecoration(
                                           hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
                                           hintText: 'First Name',
@@ -186,6 +196,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   child:TextFormField(
                                     controller: _lnController,
                                     onChanged: (text) {},
+                                    cursorColor: Colors.white,
                                     decoration: InputDecoration(
 
                                       hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
@@ -242,6 +253,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       children:[ TextFormField(
                                         controller: _emailController,
                                         onChanged: (text) {},
+                                        cursorColor: Colors.white,
                                         decoration: InputDecoration(
                                           hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
                                           hintText: 'Email Id',
@@ -301,6 +313,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   child:TextFormField(
                                     controller: _pdController,
                                     onChanged: (text) {},
+                                    cursorColor: Colors.white,
+                                    obscureText: true,
                                     decoration: InputDecoration(
 
                                       hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
@@ -384,6 +398,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     GestureDetector(
                       onTap: () {
                         registerUser();
+
+
                       },
                       child: Container(
                         margin: EdgeInsets.only(top: 20),
@@ -414,7 +430,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     SizedBox(height: 20,),
                     GestureDetector(
-                        onTap:(){},
+                        onTap:(){
+                         // AuthService().signUpWithGoogle(context);
+                        },
                         child: GmailFacebookContainer(isGmail: true, height: height*.063, width: width*.7)),
                     SizedBox(height: 10,),
                     GestureDetector(
@@ -459,13 +477,13 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
         ),
-          Positioned(
-              right: 12,
-              top:18,
-              child: TextButton(
-                  onPressed: (){},
-                  child:Text('Skip',style: TextStyle(color: Colors.white,fontSize: 18),)
-              ))
+          // Positioned(
+          //     right: 12,
+          //     top:18,
+          //     child: TextButton(
+          //         onPressed: (){},
+          //         child:Text('Skip',style: TextStyle(color: Colors.white,fontSize: 18),)
+          //     ))
 
         ]
       ),

@@ -10,6 +10,7 @@ class GmailFacebookContainer extends StatelessWidget {
   final height;
   final width;
 
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -61,7 +62,7 @@ class GmailFacebookContainer extends StatelessWidget {
                       Text(
                         isGmail?"Login with Gmail":"Login with Facebook",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 17,
                           fontWeight: FontWeight.w600,
                           color: Colors.white70
                         ),

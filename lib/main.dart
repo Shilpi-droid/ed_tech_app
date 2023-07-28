@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,7 @@ import 'package:skido/pages/splash_screen.dart';
 import 'package:skido/pages/tasks_sheet.dart';
 import 'package:skido/pages/working_proffessional_page1.dart';
 import 'package:skido/widgets/detail_page_widget.dart';
+
 
 // void main() {
 //   runApp(const MyApp());
@@ -144,10 +146,13 @@ import 'package:skido/widgets/detail_page_widget.dart';
 // }
 
 
-
-void main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
+
+
+
   runApp(MyApp(token: prefs.getString('token')));
 }
 
@@ -178,14 +183,16 @@ class MyApp extends StatelessWidget {
   }): super(key: key);
   @override
   Widget build(BuildContext context) {
+    final height=MediaQuery.of(context).size.height;
     return MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.black,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          fontFamily: "Montserrat"
         ),
-        home: (token != null && JwtDecoder.isExpired(token) == false )?MyHomePage(token: token):SplashScreen()
+        home: (token != null && JwtDecoder.isExpired(token) == false )?MyHomePage(token: token):SplashScreen(height: height,)
     );
   }
 }
@@ -220,7 +227,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
   late String userId;
 
   @override
@@ -229,6 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     Map<String,dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     userId = jwtDecodedToken['name'];
+
   }
 
   @override
@@ -238,8 +246,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: double.maxFinite,
       decoration: BoxDecoration(
@@ -259,7 +269,7 @@ class _MyHomePageState extends State<MyHomePage> {
             LandingPage(name: userId),
             Book(),
             Homework(),
-            Community(name: userId),
+            CommunityPage(name: userId),
             Settings(token: widget.token,),
           ].elementAt(_selectedIndex),
         ),

@@ -1,18 +1,32 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../models/Communities.dart';
 import '../ui.dart';
 import 'overlappingcirc.dart';
 
 class ExploreCommunityCard extends StatelessWidget {
-  final String text, image;
-  const ExploreCommunityCard({Key? key, required this.text, required this.image}) : super(key: key);
+  final Community community;
+  const ExploreCommunityCard({Key? key, required this.community}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List <String> pfps=[
+      "assets/Community/expcom1.png",
+      "assets/Community/expcom2.png",
+      "assets/Community/expcom3.png",
+      "assets/Community/expcom4.png",
+    ];
+    Random random = Random();
+    String image=pfps[random.nextInt(pfps.length)];
+
+    final height=MediaQuery.sizeOf(context).height;
+    final width=MediaQuery.sizeOf(context).width;
     return CardUI(
-        height: 173,
-        width: 140,
+        height: height*.25,
+        width: width*.42,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -23,17 +37,20 @@ class ExploreCommunityCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 5),
-            Text(
-              text,
-              //textAlign: TextAlign.center,
-              style: GoogleFonts.montserrat(
-                color: Colors.white,
-                //fontFamily: "Montserrat",
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+            SizedBox(
+              width: width*.42,
+              child: Text(
+                community.name,
+                //textAlign: TextAlign.center,
+                style: GoogleFonts.montserrat(
+                  color: Colors.white,
+                  //fontFamily: "Montserrat",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
             ),
-            SizedBox(height: 14),
+            SizedBox(height: 12),
             Overlap(),
           ],
         )

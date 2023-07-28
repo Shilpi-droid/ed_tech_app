@@ -4,26 +4,27 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:skido/Config/config.dart';
-import 'package:skido/models/connectusers.dart';
 import 'package:skido/ui.dart';
-import 'package:skido/widgets/categories.dart';
-import 'package:skido/widgets/commcat.dart';
 import 'package:skido/widgets/connectcard.dart';
-import 'package:skido/widgets/expcommcard.dart';
-import 'package:skido/widgets/livedisc.dart';
-import 'package:skido/widgets/overlappingcirc.dart';
-import 'package:skido/widgets/upcomingtopics.dart';
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
-class Community extends StatefulWidget {
+import '../models/connectusers.dart';
+import '../models/Communities.dart';
+import '../widgets/expcommcard.dart';
+import 'Community/communities.dart';
+import 'Community/community_group.dart';
+
+
+class CommunityPage extends StatefulWidget {
   final String name;
-  const Community({Key? key, required this.name}) : super(key: key);
+  const CommunityPage({Key? key, required this.name}) : super(key: key);
 
   @override
-  State<Community> createState() => _CommunityState();
+  State<CommunityPage> createState() => _CommunityPageState();
 }
 
-class _CommunityState extends State<Community> {
+class _CommunityPageState extends State<CommunityPage> {
   void getCurrentUserData() async {
     // var url = Uri.parse('http://192.168.0.137:3000/hello');
     // print('${widget.field}');
@@ -59,13 +60,16 @@ class _CommunityState extends State<Community> {
   @override
   Widget build(BuildContext context) {
     final width=MediaQuery.of(context).size.width;
+    final height=MediaQuery.of(context).size.height;
+    List<Community> yourCommunities = Community.yourCommunities();
+    var uuid=Uuid();
     return Container(
       height: double.maxFinite,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/elements/backg.png'),
-          fit: BoxFit.cover,
-        )
+        // image: DecorationImage(
+        //   image: AssetImage('assets/elements/backg.png'),
+        //   fit: BoxFit.cover,
+        // )
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -75,17 +79,17 @@ class _CommunityState extends State<Community> {
               padding: EdgeInsets.all(15.0),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        // padding: EdgeInsets.all(-1),
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back_ios_rounded, size: 25, color: Colors.white,),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     IconButton(
+                  //       // padding: EdgeInsets.all(-1),
+                  //       onPressed: (){
+                  //         Navigator.pop(context);
+                  //       },
+                  //       icon: Icon(Icons.arrow_back_ios_rounded, size: 25, color: Colors.white,),
+                  //     ),
+                  //   ],
+                  // ),
                   Container(
                     height: 200,
                     width: width-30,
@@ -110,13 +114,13 @@ class _CommunityState extends State<Community> {
                             Row(
                               children: [
                                 Text(
-                                  'Join',
+                                  'Join our',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.montserrat(
                                     color: Colors.white,
                                     //fontFamily: "Montserrat",
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25,
+                                    fontSize: 24,
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -139,7 +143,7 @@ class _CommunityState extends State<Community> {
                                 color: Colors.white,
                                 //fontFamily: "Montserrat",
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 24,
                               ),
                             ),
                             
@@ -154,35 +158,31 @@ class _CommunityState extends State<Community> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SearchCardUI(
-                          height: 30,
-                          width: 180,
+                          height: height*.05,
+                          width: width*.53,
                           child: Container(
-                            color: Colors.transparent,
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 150,
-                                  child: TextField(
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          labelText: "Search Communities...",
-                                          labelStyle: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w300,
-                                          )
+                            width: width*.53,
+                            height: height*.05,
+                            child: Expanded(
+                              child: TextField(
+                                  // obscureText: true,
+                                  decoration: InputDecoration(
+                                    suffixIcon: Icon(Icons.search,color: Colors.white,size: 16,),
+                                      border: InputBorder.none,
+                                      hintText: "Search Communities...",
+                                      hintStyle: GoogleFonts.montserrat(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300,
                                       )
-                                  ),
-                                ),
-
-                              ],
+                                  )
+                              ),
                             ),
                           )
                       ),
                       Container(
                         height: 30,
-                        width: 115,
+                        width: width*.34,
                         decoration: BoxDecoration(
                           color: Color(0xff5D73C3).withOpacity(0.8),
                           borderRadius: BorderRadius.circular(50),
@@ -192,7 +192,7 @@ class _CommunityState extends State<Community> {
                           padding: EdgeInsets.only(left: 9, right: 9),
                           child: TextField(
                             decoration: InputDecoration(
-                                labelText: 'Start your own...',
+                                labelText: 'Start a community',
                                 labelStyle: GoogleFonts.montserrat(
                                   color: Colors.white,
                                   fontSize: 15,
@@ -260,14 +260,71 @@ class _CommunityState extends State<Community> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ExploreCommunityCard(text: 'Digital Marketing', image: 'assets/Community/expcom1.png'),
-                      SizedBox(width: 15),
-                      ExploreCommunityCard(text: 'Discussion in movie trailors', image: 'assets/Community/expcom2.png'),
-                    ],
+                  SizedBox(
+                    height: yourCommunities.length*.65*height*.25,
+                    child: GridView.builder(
+                      physics:NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // Number of columns
+                        crossAxisSpacing: width*.04, // Spacing between columns
+                        mainAxisSpacing: 15.0, // Spacing between rows
+                        childAspectRatio: .9
+                      ),
+                      itemCount:yourCommunities.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                              CommunityGroup(
+                                community: yourCommunities[index],
+                                isYourCommunity: true,
+                                name:widget.name,
+                                userId: uuid.v1(),
+                              ))
+                          );
+                          },
+                            child: ExploreCommunityCard(community: yourCommunities[index],)
+                        );
+                      },
+                    ),
                   ),
+                  SizedBox(height: height*.025,),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Communities(name:widget.name)));
+                    },
+                    child: Container(
+                      height: height*.05,
+                      width: width*.4,
+                      decoration: BoxDecoration(
+                        color: Color(0xff5D73C3),
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Center(
+                        child: Text("View More",style: TextStyle(
+                            color: Colors.white,fontWeight: FontWeight.bold,
+                          fontSize: 18
+                        ),),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: height*.05,),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     GestureDetector(
+                  //         onTap: (){
+                  //           Navigator.push(context, MaterialPageRoute(
+                  //               builder: (context) => Communities(name:widget.name)));
+                  //         },
+                  //         child: ExploreCommunityCard(text: 'Digital Marketing', image: 'assets/Community/expcom1.png')),
+                  //     SizedBox(width: 15),
+                  //     ExploreCommunityCard(text: 'Discussion in movie trailors', image: 'assets/Community/expcom2.png'),
+                  //   ],
+                  // ),
+
+
+
                   // SizedBox(height: 20),
                   // Text(
                   //   'Live discussion on bollywood\nmovies',

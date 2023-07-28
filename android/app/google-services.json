@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "477341943873",
+    "project_id": "skido-165af",
+    "storage_bucket": "skido-165af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:477341943873:android:d6c74ac09b440d21669ec0",
+        "android_client_info": {
+          "package_name": "com.example.skido"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "477341943873-lajnb5hf1867p0uebe3j9pea3lsekk2a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.skido",
+            "certificate_hash": "4f4c6228d48218ce26aaa67bb7fc9db68dc5b921"
+          }
+        },
+        {
+          "client_id": "477341943873-ldpqe69qjl0ddmc4ac5nu2kf58kd3o00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCldys4qRtZYnNt-KxrS9TYrrs8uisAIqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477341943873-hqi1kj6jjehn5spkt3n5v9mvuk2n5h91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -34,7 +34,7 @@ class _OverlapState extends State<Overlap> {
                   child: Align(
                       widthFactor: 0.7,
                       child: CircleAvatar(
-                        radius: 15,
+                        radius: 14,
                         backgroundColor: Colors.white,
                         child: CircleAvatar(
                           radius: 12,

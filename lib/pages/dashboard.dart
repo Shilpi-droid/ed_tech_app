@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:skido/pages/8to12.dart';
+import 'package:skido/pages/News/breaking_news.dart';
 import 'package:skido/pages/apply_now_page.dart';
 import 'package:skido/pages/notifications_page.dart';
 import 'package:skido/pages/working%20professional/workingpf.dart';
@@ -11,6 +12,7 @@ import 'package:skido/ui.dart';
 import 'package:skido/widgets/division.dart';
 import 'package:skido/widgets/ongoing.dart';
 
+import 'News/discover_news.dart';
 import 'community.dart';
 //import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -80,7 +82,7 @@ class _LandingPageState extends State<LandingPage> {
                             onTap: (){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) =>  Community(name: widget.name,)),
+                                MaterialPageRoute(builder: (context) =>  CommunityPage(name: widget.name,)),
                               );
                             },
                             child: Icon(Icons.post_add,  size: 25, color: Colors.white, )
@@ -290,7 +292,16 @@ class _LandingPageState extends State<LandingPage> {
                 ),
                 ),
                 SizedBox(height: 10.0),
-                Ongoing(logoImage: 'assets/Landing_page/mainlogo.png', heading: 'Upskill and Learn Coding', description: 'Learn the art of coding', eventImage: 'assets/Landing_page/ong1.png'),
+                GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DiscoverNews()
+                            // DiscoverNews()
+                        ),
+                      );
+                    },
+                    child: Ongoing(logoImage: 'assets/Landing_page/mainlogo.png', heading: 'Upskill and Learn Coding', description: 'Learn the art of coding', eventImage: 'assets/Landing_page/ong1.png')),
 
                 // SizedBox(
                 //   width: 200.0,

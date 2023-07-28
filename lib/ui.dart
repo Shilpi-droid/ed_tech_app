@@ -144,7 +144,7 @@ class SearchCardUI extends StatelessWidget {
         child: Container(
           height: height,
           width: width,
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.only(top: 10.0,bottom: 10,left: 10),
           decoration: BoxDecoration(
             //color: Colors.white.withOpacity(0.3),
             gradient: LinearGradient(

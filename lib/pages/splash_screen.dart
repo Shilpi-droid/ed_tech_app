@@ -7,8 +7,9 @@ import 'onboarding_screen1.dart';
 
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({Key? key,required this.height}) : super(key: key);
 
+  final height;
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -25,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
+   //
 
     _dropcontroller = AnimationController(
       duration: const Duration(milliseconds: 1500),
@@ -33,7 +35,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     _dropAnimation = Tween<double>(
       begin: -200.0,
-      end: 350.0,
+      end: widget.height*.4,
+      //350.0,
     ).animate(CurvedAnimation(
         parent: _dropcontroller,
         curve: Curves.easeInOut,
@@ -81,6 +84,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void dispose() {
     _colorcontroller.dispose();
     _colorcontroller.dispose();
+
     super.dispose();
   }
 
@@ -88,6 +92,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     final circleSize = size.width * _colorAnimation.value;
     return Scaffold(
       body: Container(

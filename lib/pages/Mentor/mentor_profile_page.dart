@@ -188,10 +188,12 @@ class _MentorProfileState extends State<MentorProfile>  with TickerProviderState
                 Positioned(
                   bottom: height*.018,
                   left: width*.05,
-                  child: Container(
+                  child:
+                  Container(
                     height: height*.37,
                     width:width*.9,
-                    child: Column(
+                    child:
+                    Column(
                       children: [
                         TabBar(
                           controller: _tabController,

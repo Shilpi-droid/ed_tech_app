@@ -8,7 +8,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skido/Config/services.dart';
+import 'package:skido/pages/check_email.dart';
+import 'package:skido/pages/create_new_pass.dart';
 import 'package:skido/pages/dashboard.dart';
+import 'package:skido/pages/forgot_password.dart';
 import 'package:skido/pages/signup_page.dart';
 
 import '../Config/config.dart';
@@ -171,6 +175,7 @@ class _SignInPageState extends State<SignInPage> {
                                   children:[
                                     TextFormField(
                                     controller: _emailController,
+                                    cursorColor: Colors.white,
                                     onChanged: (text) {},
                                     decoration: InputDecoration(
                                       hintStyle: TextStyle(fontSize:20,color: Colors.white,fontWeight: FontWeight.bold),
@@ -238,6 +243,8 @@ class _SignInPageState extends State<SignInPage> {
                                   ),
                                   child:TextFormField(
                                     controller: _pdController,
+                                    cursorColor: Colors.white,
+                                    obscureText: true,
                                     onChanged: (text) {},
                                     decoration: InputDecoration(
                                       errorText: _isNotValidate ? "Enter Proper Info" : null,
@@ -277,9 +284,18 @@ class _SignInPageState extends State<SignInPage> {
                         },
                       ),
                       //SizedBox(width: 10,),
-                      Text('Remember me',style: TextStyle(color: Colors.white,fontSize: 16),),
-                      SizedBox(width: 25,),
-                      Text('Forgot Password?',style: TextStyle(color: Colors.white,fontSize: 16),),
+                      Text('Remember me',style: TextStyle(color: Colors.white,fontSize: 13),),
+                      SizedBox(width: width*.12,),
+                      GestureDetector(
+                          onTap:(){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPassword(),
+                              ),
+                            );
+                          },
+                          child: Text('Forgot Password?',style: TextStyle(color: Colors.white,fontSize: 13),)
+                      ),
                     ],),
 
 
@@ -360,7 +376,7 @@ class _SignInPageState extends State<SignInPage> {
                             loginUser();
                           },
                           child: Text(
-                            'Start',
+                            'Login',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               color: Colors.white,
@@ -373,7 +389,9 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     SizedBox(height: 20,),
                     GestureDetector(
-                        onTap:(){},
+                        onTap:(){
+                          AuthService().signInWithGoogle(context,prefs);
+                        },
                         child: GmailFacebookContainer(isGmail: true, height: height*.063, width: width*.7)),
                     SizedBox(height: 10,),
                     GestureDetector(
@@ -383,30 +401,26 @@ class _SignInPageState extends State<SignInPage> {
 
                     SizedBox(
                       height: 200,
-                      child: Container(
-                        // margin: EdgeInsets.only(top: 20),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 70,
-                            ),
-                            Text('Don\'t have an account?',style: TextStyle(color: Colors.white,),),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignUpPage()));
-                                },
-                                child: Text(
-                                  'Sign up',
-                                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-                                )),
-                          ],
-                        ),
+                      width: width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Don\'t have an account?',style: TextStyle(color: Colors.white,),),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpPage()));
+                              },
+                              child: Text(
+                                'Sign up',
+                                style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                              )),
+                        ],
                       ),
                     ),
                     // Login button
@@ -418,13 +432,13 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ),
         ),
-          Positioned(
-            right: 12,
-              top:18,
-              child: TextButton(
-                      onPressed: (){},
-                      child:Text('Skip',style: TextStyle(color: Colors.white,fontSize: 18),)
-              ))
+          // Positioned(
+          //   right: 12,
+          //     top:18,
+          //     child: TextButton(
+          //             onPressed: (){},
+          //             child:Text('Skip',style: TextStyle(color: Colors.white,fontSize: 18),)
+          //     ))
         ]
       ),
     );

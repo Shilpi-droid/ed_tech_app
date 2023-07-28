@@ -18,7 +18,8 @@ class _MentorListPageState extends State<MentorListPage> {
   Widget build(BuildContext context) {
     final height=MediaQuery.of(context).size.height;
     final width=MediaQuery.of(context).size.width;
-    return Container(
+    return
+      Container(
       height: double.maxFinite,
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -30,7 +31,8 @@ class _MentorListPageState extends State<MentorListPage> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: SafeArea(
-            child: Column(
+            child:
+            Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 25.0,left: 20,right: 20),
