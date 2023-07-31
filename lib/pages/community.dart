@@ -261,7 +261,7 @@ class _CommunityPageState extends State<CommunityPage> {
                   ),
                   SizedBox(height: 10,),
                   SizedBox(
-                    height: yourCommunities.length*.65*height*.25,
+                    height: height*.5,
                     child: GridView.builder(
                       physics:NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -270,7 +270,7 @@ class _CommunityPageState extends State<CommunityPage> {
                         mainAxisSpacing: 15.0, // Spacing between rows
                         childAspectRatio: .9
                       ),
-                      itemCount:yourCommunities.length,
+                      itemCount:4,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                         onTap: (){

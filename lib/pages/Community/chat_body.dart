@@ -3,7 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'dart:ui';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -11,6 +15,7 @@ import 'package:skido/pages/Community/camera_page.dart';
 import 'package:skido/widgets/Community/own_file_card.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../models/ChatMessage.dart';
 import '../../models/Communities.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -45,6 +50,7 @@ class _ChatBodyState extends State<ChatBody> {
     // TODO: implement initState
     super.initState();
     connect();
+    _loadChatMessages();
   }
 
   void connect(){
@@ -72,8 +78,8 @@ class _ChatBodyState extends State<ChatBody> {
                  type: msg["type"],
                  msg: msg["msg"],
                  sender: msg["senderName"],
-                 path:msg["path"]
-
+                 path:msg["path"],
+                  timestamp: DateTime.now()
              )
          );
        });
@@ -82,10 +88,48 @@ class _ChatBodyState extends State<ChatBody> {
    });
   }
 
-  void sendMsg(String msg,String senderName,String path )
+
+
+  void sendMsg(String msg,String senderName,String path )async
   {
+    try {
+      print(DateTime.now());
+      print(path);
+      final response = await http.post(
+        Uri.parse("https://skidobackend.onrender.com/chat/saveChatMessage"),
+        headers: {"Content-Type":"application/json"},
+        body: jsonEncode({
+          "roomId":widget.community.name,
+          "sender":senderName,
+          "message":msg,
+          "path":path,
+          "timestamp":DateTime.now().toString(),
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Request was successful
+        print('Response: ${jsonDecode(response.body)}');
+      } else {
+        // Request failed with an error
+        print('Error: ${response.statusCode}');
+        print('Error message: ${response.body}');
+      }
+    } catch (e) {
+      // An error occurred while making the request
+      print('Error: $e');
+    }
+
+
+
+
     if(mounted){
-    MsgModel ownMsg=  MsgModel(type: "ownMsg", msg: msg, sender: senderName,);
+    MsgModel ownMsg=  MsgModel(
+        type: "ownMsg",
+        msg: msg,
+        sender: senderName,
+        timestamp: DateTime.now()
+    );
     listMsg.add(ownMsg);
     setState(() {
       listMsg;
@@ -99,10 +143,91 @@ class _ChatBodyState extends State<ChatBody> {
     });
   }
 
+  Future<List<ChatMessage>> fetchChatMessages() async {
+    final databaseReference = FirebaseDatabase.instance.reference().child('chats').child(widget.community.name) ;
+
+    DatabaseEvent dataSnapshot;
+    try {
+      dataSnapshot = await databaseReference.once();
+    } catch (e) {
+      // Handle any error that may occur during the data retrieval.
+      print('Error fetching data: $e');
+      return [];
+    }
+
+    Map<dynamic, dynamic>? messagesMap = dataSnapshot.snapshot.value as Map<dynamic,dynamic>;
+    if (messagesMap == null) {
+      return [];
+    }
+
+    List<ChatMessage> messages = messagesMap.entries.map((entry) {
+      return ChatMessage.fromJson(Map<String, dynamic>.from(entry.value));
+    }).toList();
+
+    return messages;
+  }
+
+  List<ChatMessage> chatMessages = [];
+
+  Future<void> _loadChatMessages() async {
+    try {
+      List<ChatMessage> messages = await fetchChatMessages();
+      setState(() {
+        chatMessages = messages.toList();
+      });
+      print("Messages fetched");
+    } catch (e) {
+      // Handle any error that may occur during the loading process.
+      print('Error loading chat messages: $e');
+    }
+
+    // listMsg.addAll(chatMessages.map((chatMessage) {
+    //   return MsgModel(
+    //     type: chatMessage.type,
+    //     msg: chatMessage.message,
+    //     sender: chatMessage.sender,
+    //     path: chatMessage.path, // Set empty path for chat messages
+    //     timestamp: chatMessage.timestamp,
+    //   );
+    // }
+    // ));
+
+    // Retrieve images and add them to the listMsg
+    for (var chatMessage in chatMessages) {
+      MsgModel msgModel = MsgModel(
+        type: chatMessage.type,
+        msg: chatMessage.message,
+        sender: chatMessage.sender,
+        path: chatMessage.path,
+        timestamp: chatMessage.timestamp,
+      );
+
+      // If the message contains an image, download it from Firebase Storage
+      // if (chatMessage.path.isNotEmpty) {
+      //   try {
+      //     var ref = firebase_storage.FirebaseStorage.instance.ref(chatMessage.path);
+      //     String imageUrl = await ref.getDownloadURL();
+      //     // Set the downloaded image URL to the path property of msgModel
+      //     msgModel.path = imageUrl;
+      //   } catch (e) {
+      //     print('Error loading image: $e');
+      //   }
+      // }
+
+      listMsg.add(msgModel);
+    }
+    listMsg=listMsg.reversed.toList();
+    print(listMsg);
+    listMsg.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+  }
+
+
+
   void onImageSend(String path,String message,String senderName,bool isVideo,VideoPlayerController videoPlayerController) async
   {
     Navigator.pop(context);
     Navigator.pop(context);
+
 
     var request =http.MultipartRequest("POST",Uri.parse("https://skidobackend.onrender.com/chat/addImage"));
     request.files.add(await http.MultipartFile.fromPath("img", path));
@@ -114,16 +239,48 @@ class _ChatBodyState extends State<ChatBody> {
     var httpResponse=await http.Response.fromStream(response);
     var data = json.decode(httpResponse.body);
     print(response.statusCode);
-
+    print(data[path]);
     if(mounted){
-    MsgModel ownMsg=  MsgModel(type: "ownMsg", msg: message, sender: senderName,path: data['path'],
-        isVideo: isVideo,
-      videoPlayerController: videoPlayerController
+    MsgModel ownMsg=  MsgModel(
+      type: "ownMsg",
+      msg: message,
+      sender: senderName,
+      path: data['path'],
+      timestamp: DateTime.now()
     );
     listMsg.add(ownMsg);
     setState(() {
       listMsg;
     });}
+
+
+    try {
+      print(DateTime.now());
+      print(path);
+      final response = await http.post(
+        Uri.parse("https://skidobackend.onrender.com/chat/saveChatMessage"),
+        headers: {"Content-Type":"application/json"},
+        body: jsonEncode({
+          "roomId":widget.community.name,
+          "sender":senderName,
+          "message":message,
+          "path":data['path'],
+          "timestamp":DateTime.now().toString(),
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Request was successful
+        print('Response: ${jsonDecode(response.body)}');
+      } else {
+        // Request failed with an error
+        print('Error: ${response.statusCode}');
+        print('Error message: ${response.body}');
+      }
+    } catch (e) {
+      // An error occurred while making the request
+      print('Error: $e');
+    }
 
     socket!.emit('sendMsg',{
       "type":"ownMsg",
@@ -138,16 +295,22 @@ class _ChatBodyState extends State<ChatBody> {
   }
 
   ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
+    final DatabaseReference databaseReference =
+    FirebaseDatabase.instance.reference().child('chats');
     final height=MediaQuery.of(context).size.height;
     final width=MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        SizedBox(height: 20,),
-        Expanded(
+    return
+      Column(
+        children: [
+          SizedBox(height: 20,),
+
+          Expanded(
             child: ListView.builder(
-              shrinkWrap: true,
+                shrinkWrap: true,
+                // physics: NeverScrollableScrollPhysics(),
                 itemCount: listMsg.length,
                 controller: _scrollController,
                 itemBuilder: (context,index) {
@@ -156,39 +319,48 @@ class _ChatBodyState extends State<ChatBody> {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
                   );
-              if(listMsg[index].type=="ownMsg") {
-                if (listMsg[index].path.length > 0)
-                  return OwnFileCard(
-                      path: listMsg[index].path,
-                      message: listMsg[index].msg,
-                    isVideo:listMsg[index].isVideo ,
-                    videoPlayerController: listMsg[index].videoPlayerController,
-                  );
-                else if(listMsg[index].isVideo){
-                  return OwnFileCard(
-                    path: listMsg[index].path,
-                    message: listMsg[index].msg,
-                    isVideo:listMsg[index].isVideo,
-                    videoPlayerController: listMsg[index].videoPlayerController,
-                  );
+
+                  // if (listMsg[index].type == "ownMsg")'
+                  if (listMsg[index].sender ==widget.name )
+                  {
+                    print(listMsg[index].sender);
+                    if (listMsg[index].path.length > 0)
+                      return OwnFileCard(
+                        path: listMsg[index].path,
+                        message: listMsg[index].msg,
+                        sender: listMsg[index].sender,
+                        displayName:index==0?true:listMsg[index-1].sender.compareTo(listMsg[index].sender)==0?false:true
+                      );
+                    else
+                      return OwnMsgWidget(
+                          sender: listMsg[index].sender,
+                          msg: listMsg[index].msg,
+                          displayName:index==0?true:listMsg[index-1].sender.compareTo(listMsg[index].sender)==0?listMsg[index-1].path!=""?true:false:true
+
+                      );
+                  }
+
+                  else {
+                    print(listMsg[index].sender);
+                    if (listMsg[index].path.length > 0)
+                      return ReplyFileCard(
+                        path: listMsg[index].path,
+                        message: listMsg[index].msg,
+                        sender: listMsg[index].sender,
+                        displayName: index==0?true:listMsg[index-1].sender.compareTo(listMsg[index].sender)==0?listMsg[index-1].path!=""?true:false:true,
+                        // isVideo: listMsg[index].isVideo,
+                      );
+                    else
+                      return OtherMsgWidget(
+                          sender: listMsg[index].sender,
+                          msg: listMsg[index].msg,
+                          displayName: index==0?true:listMsg[index-1].sender.compareTo(listMsg[index].sender)==0?false:true
+                      );
+                  }
                 }
-                else
-                    return OwnMsgWidget(sender: listMsg[index].sender, msg: listMsg[index].msg);
+            ),
+          ),
 
-              }
-              else {
-                if (listMsg[index].path.length > 0)
-                  return ReplyFileCard(
-                      path: listMsg[index].path,
-                      message: listMsg[index].msg,
-                    isVideo:listMsg[index].isVideo ,
-                  );
-                else
-                  return OtherMsgWidget(
-                      sender: listMsg[index].sender, msg: listMsg[index].msg);
-              }})
-
-        ),
         Padding(
           padding:  EdgeInsets.symmetric(horizontal: width*.05,vertical: height*.02),
           child: Row(
@@ -206,7 +378,6 @@ class _ChatBodyState extends State<ChatBody> {
                             border:Border.all(color: Colors.white.withOpacity(0.18)),
                             borderRadius: BorderRadius.circular(15),
                             color:  Colors.white.withOpacity(.3),
-
                           ),
                         ),
                         BackdropFilter(

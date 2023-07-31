@@ -25,12 +25,23 @@ class Community {
     Community(
         name: "Product Manager",
         numberOfMembers: 0,
-        isYourCommunity: false
+        isYourCommunity: true
     ),
+    Community(
+        name: "Business Analyst",
+        numberOfMembers: 0,
+        isYourCommunity: true
+    ),
+    Community(
+        name: "Full Stack Developers",
+        numberOfMembers: 0,
+        isYourCommunity: true
+    ),
+
     Community(
         name: "Digital Marketing",
         numberOfMembers: 0,
-        isYourCommunity: false
+        isYourCommunity: true
     ),
     Community(
         name: "Machine Learning",
@@ -38,29 +49,19 @@ class Community {
         isYourCommunity: true
     ),
     Community(
-        name: "Business Analyst",
-        numberOfMembers: 0,
-        isYourCommunity: false
-    ),
-    Community(
-        name: "Full Stack Developers",
-        numberOfMembers: 0,
-        isYourCommunity: false
-    ),
-    Community(
         name: "UI/UX",
         numberOfMembers: 0,
-        isYourCommunity: false
+        isYourCommunity: true
     ),
     Community(
         name: "Blockchain",
         numberOfMembers: 0,
-        isYourCommunity: false
+        isYourCommunity: true
     ),
     Community(
         name: "Cyber Security",
         numberOfMembers: 0,
-        isYourCommunity: false
+        isYourCommunity: true
     ),
     Community(
         name: "Flutter",
@@ -70,7 +71,7 @@ class Community {
     Community(
         name: "MERN Stack",
         numberOfMembers: 0,
-        isYourCommunity: false
+        isYourCommunity: true
     ),
 
 

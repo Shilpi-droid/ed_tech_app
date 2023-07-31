@@ -72,7 +72,7 @@ class _CommunitiesState extends State<Communities> {
                              ),
                              child: Center(
                                child: Text(
-                                 "DH",
+                                 widget.name.substring(0,2).toUpperCase(),
                                  style: TextStyle(
                                    color: Colors.white,
                                    fontSize: 24,
@@ -159,10 +159,11 @@ class _CommunitiesState extends State<Communities> {
                       },
                     ),
                   ),
+                  Community.notYourCommunities().length==0?
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal:width*.05,vertical: height*.03),
                     child: Text("Communities to be a part of",style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w600),),
-                  ),
+                  ):Container(),
                   SizedBox(
                     height:Community.notYourCommunities().length * height*.124 ,
                     child: ListView.builder(

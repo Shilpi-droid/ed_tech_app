@@ -394,9 +394,9 @@ class _SignInPageState extends State<SignInPage> {
                         },
                         child: GmailFacebookContainer(isGmail: true, height: height*.063, width: width*.7)),
                     SizedBox(height: 10,),
-                    GestureDetector(
-                      onTap: (){},
-                        child: GmailFacebookContainer(isGmail: false, height: height*.063, width: width*.7)),
+                    // GestureDetector(
+                    //   onTap: (){},
+                    //     child: GmailFacebookContainer(isGmail: false, height: height*.063, width: width*.7)),
 
 
                     SizedBox(

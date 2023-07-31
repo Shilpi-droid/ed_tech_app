@@ -429,16 +429,16 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     SizedBox(height: 20,),
-                    GestureDetector(
-                        onTap:(){
-                         // AuthService().signUpWithGoogle(context);
-                        },
-                        child: GmailFacebookContainer(isGmail: true, height: height*.063, width: width*.7)),
-                    SizedBox(height: 10,),
-                    GestureDetector(
-                        onTap: (){},
-                        child: GmailFacebookContainer(isGmail: false, height: height*.063, width: width*.7)),
-
+                    // GestureDetector(
+                    //     onTap:(){
+                    //      // AuthService().signUpWithGoogle(context);
+                    //     },
+                    //     child: GmailFacebookContainer(isGmail: true, height: height*.063, width: width*.7)),
+                    // SizedBox(height: 10,),
+                    // GestureDetector(
+                    //     onTap: (){},
+                    //     child: GmailFacebookContainer(isGmail: false, height: height*.063, width: width*.7)),
+                    //
 
                     SizedBox(
                       height: 100,

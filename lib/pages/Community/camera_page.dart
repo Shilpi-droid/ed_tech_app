@@ -119,7 +119,7 @@ class _CameraPageState extends State<CameraPage>with SingleTickerProviderStateMi
         Opacity(
           opacity: 0.75,
           child: ModalBarrier(
-            dismissible: false,
+            dismissible: true,
             color: Colors.black,
           ),
         ),
@@ -209,37 +209,37 @@ class _CameraPageState extends State<CameraPage>with SingleTickerProviderStateMi
                       )
                     ],),
                   ),
-                  GestureDetector(
-                    onTap:()async{
-                      final picker = ImagePicker();
-                      final pickedVideo = await picker.pickVideo(source: ImageSource.gallery);
-                      _videoPlayerController = VideoPlayerController.file(File(pickedVideo!.path));
-                      await _videoPlayerController?.initialize();
-                      setState(() {});
-                      Navigator.push(context,MaterialPageRoute(builder: (builder)=>
-                      CameraViewPage(
-                      path: pickedVideo!.path,
-                      onImageSend: widget.onImageSend,
-                      senderName: widget.senderName,isVideo: true,
-                        videoPlayerController: _videoPlayerController!,
-                      )));
-
-                    },
-                    child: Row(children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: width*.06,right: width*.05,),
-                        child: Image.asset("assets/Community/video_gallery_icon.png",scale: 4,),
-                      ),
-                      Text("Video Gallery",style: TextStyle(
-                          color: Color(0xff5F6097),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.none,
-                          fontFamily: "Montserrat"
-                      )
-                      )
-                    ],),
-                  )
+                  // GestureDetector(
+                  //   onTap:()async{
+                  //     final picker = ImagePicker();
+                  //     final pickedVideo = await picker.pickVideo(source: ImageSource.gallery);
+                  //     _videoPlayerController = VideoPlayerController.file(File(pickedVideo!.path));
+                  //     await _videoPlayerController?.initialize();
+                  //     setState(() {});
+                  //     Navigator.push(context,MaterialPageRoute(builder: (builder)=>
+                  //     CameraViewPage(
+                  //     path: pickedVideo!.path,
+                  //     onImageSend: widget.onImageSend,
+                  //     senderName: widget.senderName,isVideo: true,
+                  //       videoPlayerController: _videoPlayerController!,
+                  //     )));
+                  //
+                  //   },
+                  //   child: Row(children: [
+                  //     Padding(
+                  //       padding: EdgeInsets.only(left: width*.06,right: width*.05,),
+                  //       child: Image.asset("assets/Community/video_gallery_icon.png",scale: 4,),
+                  //     ),
+                  //     Text("Video Gallery",style: TextStyle(
+                  //         color: Color(0xff5F6097),
+                  //         fontSize: 24,
+                  //         fontWeight: FontWeight.bold,
+                  //         decoration: TextDecoration.none,
+                  //         fontFamily: "Montserrat"
+                  //     )
+                  //     )
+                  //   ],),
+                  // )
                 ],
               ),
             ),

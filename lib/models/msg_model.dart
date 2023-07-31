@@ -109,50 +109,70 @@
 
 import 'package:video_player/video_player.dart';
 
-class MsgModel {
+// class MsgModel {
+//   String type;
+//   String msg;
+//   String sender;
+//   String path;
+//   bool isVideo;
+//   VideoPlayerController videoPlayerController;
+//
+//   // Private constructor for internal use
+//   MsgModel._({
+//     required this.type,
+//     required this.msg,
+//     required this.sender,
+//     this.path = "",
+//     this.isVideo = false,
+//     required this.videoPlayerController,
+//   });
+//
+//   // Factory constructor with default value for videoPlayerController
+//   factory MsgModel({
+//     required String type,
+//     required String msg,
+//     required String sender,
+//     String path = "",
+//     bool isVideo = false,
+//     VideoPlayerController? videoPlayerController,
+//   }) {
+//     return MsgModel._(
+//       type: type,
+//       msg: msg,
+//       sender: sender,
+//       path: path,
+//       isVideo: isVideo,
+//       videoPlayerController: videoPlayerController ?? VideoPlayerController.asset('assets/Community/loading_bar.mp4'),
+//     );
+//   }
+//
+//   Future<void> initializeVideoController() async {
+//     if (isVideo) {
+//       await videoPlayerController.initialize();
+//     }
+//   }
+//
+//   void dispose() {
+//     videoPlayerController.dispose();
+//   }
+// }
+
+
+class MsgModel
+{
   String type;
   String msg;
   String sender;
   String path;
-  bool isVideo;
-  VideoPlayerController videoPlayerController;
+  DateTime timestamp;
+  MsgModel(
+    {
+      required this.type,
+      required this.msg,
+      required this.sender,
+      this.path="",
+      required this.timestamp
 
-  // Private constructor for internal use
-  MsgModel._({
-    required this.type,
-    required this.msg,
-    required this.sender,
-    this.path = "",
-    this.isVideo = false,
-    required this.videoPlayerController,
-  });
-
-  // Factory constructor with default value for videoPlayerController
-  factory MsgModel({
-    required String type,
-    required String msg,
-    required String sender,
-    String path = "",
-    bool isVideo = false,
-    VideoPlayerController? videoPlayerController,
-  }) {
-    return MsgModel._(
-      type: type,
-      msg: msg,
-      sender: sender,
-      path: path,
-      isVideo: isVideo,
-      videoPlayerController: videoPlayerController ?? VideoPlayerController.asset('assets/Community/loading_bar.mp4'),
-    );
-  }
-
-  Future<void> initializeVideoController() async {
-    if (isVideo) {
-      await videoPlayerController.initialize();
     }
-  }
-
-  void dispose() {
-    videoPlayerController.dispose();
-  }
+  );
 }

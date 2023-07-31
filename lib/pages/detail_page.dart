@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:skido/pages/payment_details_page.dart';
+import 'package:skido/widgets/custom_dialog_box.dart';
 
 import '../models/Course.dart';
 import '../widgets/course_module.dart';
@@ -131,7 +132,9 @@ class _DetailPageState extends State<DetailPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context)=>
-                                      PaymentDetails(page: DetailPage(index: widget.index,))),
+                                  CustomDialog(index:widget.index)
+
+                                  ),
                               );
                             },
                             child: Container(

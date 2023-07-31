@@ -92,17 +92,17 @@ class CommunityCard extends StatelessWidget {
                     ),
                   ),
                   // SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.person,color: Colors.white,size: 20,),
-                      SizedBox(width: 10,),
-                      Text(
-                          community.numberOfMembers.toString(),
-                        style: TextStyle(color: Colors.white,fontSize: 15),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   children: [
+                  //     Icon(Icons.person,color: Colors.white,size: 20,),
+                  //     SizedBox(width: 10,),
+                  //     Text(
+                  //         community.numberOfMembers.toString(),
+                  //       style: TextStyle(color: Colors.white,fontSize: 15),
+                  //     )
+                  //   ],
+                  // ),
 
                 ],),
                 // SizedBox(width: width*.01,),
