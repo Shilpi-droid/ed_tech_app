@@ -14,6 +14,7 @@ import '../models/Communities.dart';
 import '../widgets/expcommcard.dart';
 import 'Community/communities.dart';
 import 'Community/community_group.dart';
+import 'Community/create_community.dart';
 
 
 class CommunityPage extends StatefulWidget {
@@ -180,27 +181,34 @@ class _CommunityPageState extends State<CommunityPage> {
                             ),
                           )
                       ),
-                      Container(
-                        height: 30,
-                        width: width*.34,
-                        decoration: BoxDecoration(
-                          color: Color(0xff5D73C3).withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(color:Colors.white, width: 0.5),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 9, right: 9),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                labelText: 'Start a community',
-                                labelStyle: GoogleFonts.montserrat(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w300,
-                                )
-                            ),
+                      GestureDetector(
+                        child: Container(
+                          height: 45,
+                          width: 150,
+                          padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            color: Color(0xff5D73C3).withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(color:Colors.white, width: 0.1),
+                          ),
+                          child: Center(
+                              child: Text(
+                                'Start a community',
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14
+                                ),
+                              )
                           ),
                         ),
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CreateCommunityPage()),
+                          );
+                        },
                       ),
                     ],
                   ),

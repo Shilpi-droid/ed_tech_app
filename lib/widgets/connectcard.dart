@@ -39,16 +39,16 @@ class ConnectCard extends StatelessWidget {
                               fontSize: 12,
                             ),
                           ),
-                          Text(
-                            'New in Skido',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              //fontFamily: "Montserrat",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 8,
-                            ),
-                          ),
+                          // Text(
+                          //   'New in Skido',
+                          //   textAlign: TextAlign.center,
+                          //   style: GoogleFonts.montserrat(
+                          //     color: Colors.white,
+                          //     //fontFamily: "Montserrat",
+                          //     fontWeight: FontWeight.w400,
+                          //     fontSize: 8,
+                          //   ),
+                          // ),
                           SizedBox(height: 8,),
                           ConnectBtn2(text: 'Connect')
                         ],

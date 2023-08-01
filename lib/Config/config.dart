@@ -10,4 +10,5 @@ final googleSignIn =url+ 'user/googleSignIn';
 final googleSignUp =url+ 'user/googleSignUp';
 final fbSignIn =url+ 'user/fbSignIn';
 final fbSignUp =url+ 'user/fbSignUp';
+final createCommunity=url+'comm/addCommunity';
 

@@ -38,8 +38,8 @@ class _ReplyFileCardState extends State<ReplyFileCard> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15,vertical:5),
           child: Container(
-            height: height*.27,
-            width: width*.4,
+            height: height*.3,
+            width: width*.45,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.transparent
@@ -48,9 +48,32 @@ class _ReplyFileCardState extends State<ReplyFileCard> {
               color: Colors.white.withOpacity(.5),
               margin: EdgeInsets.all(13),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                  borderRadius:
+                  BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    topLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+
+                  )
               ),
-              child:  Column(
+              child:
+              widget.message.length>0?
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Expanded(child: Image.network("https://skidobackend.onrender.com/uploads/$path",fit: BoxFit.fitHeight,)),
+                  Padding(
+                    padding:  EdgeInsets.only(left:8.0,top:5,right:8),
+                    child: Text(widget.sender,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                  ),
+                  SizedBox(height: 6,),
+                  Expanded(
+                      child:
+                  Image.network(widget.path,fit: BoxFit.cover,)),
+                ],
+              ):
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Expanded(child: Image.network("https://skidobackend.onrender.com/uploads/$path",fit: BoxFit.fitHeight,)),
@@ -60,8 +83,7 @@ class _ReplyFileCardState extends State<ReplyFileCard> {
                   ),
                   Expanded(
                       child:
-                  Image.network(widget.path,fit: BoxFit.fitHeight,)),
-                  widget.message.length>0?
+                      Image.network(widget.path,fit: BoxFit.fitHeight,)),
                   Container(
                       height: 40,
                       padding: EdgeInsets.only(right: 15,top: 0),
@@ -71,9 +93,11 @@ class _ReplyFileCardState extends State<ReplyFileCard> {
                         style: TextStyle(
                             color: Colors.white,fontSize: 15,fontWeight: FontWeight.w600
                         ),
-                      )):Container()
+                      ))
                 ],
-              ),
+              )
+
+              ,
             ),
           ),
         ),

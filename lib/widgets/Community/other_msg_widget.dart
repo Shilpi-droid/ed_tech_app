@@ -45,7 +45,15 @@ class OtherMsgWidget extends StatelessWidget {
                     maxWidth: width-60
                 ),
                 child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                   BorderRadius.only(
+                      topRight: Radius.circular(15),
+                      topLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+
+                        )
+                  ),
                   color:Colors.white.withOpacity(.5),
                   //Colors.white.withOpacity(.5),
                   child: Padding(

@@ -1,501 +1,741 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:skido/pages/details.dart';
+import 'package:skido/pages/forgot_password.dart';
 import 'package:skido/ui.dart';
 import 'package:skido/widgets/coursecard.dart';
 
 class Book extends StatefulWidget {
-  const Book({Key? key}) : super(key: key);
+  const Book({Key? key,required this.userId}) : super(key: key);
 
+  final String userId;
 
   @override
   State<Book> createState() => _BookState();
 }
 
 
+void updateProfile(
+    String phn,
+    String designation,
+    String interests,
+    String bio,
+    String userId,
+    String field
+    ) async {
+
+  final url = Uri.parse('https://skidobackend.onrender.com/comm/updateProfile/'+userId); // Replace with your API endpoint for email verification
+  final response;
+  try {
+    if(field.compareTo("phone_no")==0){
+     response = await http.post(
+        url,
+        headers: {"Content-Type":"application/json"},
+        body: jsonEncode({
+          'phone_no':phn,
+        })
+    );}
+    else if(field.compareTo("designation")==0){
+       response = await http.post(
+          url,
+          headers: {"Content-Type":"application/json"},
+          body: jsonEncode({
+            'current_designation':designation,
+          })
+      );}
+    else if(field.compareTo("interests")==0){
+       response = await http.post(
+          url,
+          headers: {"Content-Type":"application/json"},
+          body: jsonEncode({
+            'interests':interests,
+          })
+      );}
+    else {
+      response = await http.post(
+          url,
+          headers: {"Content-Type":"application/json"},
+          body: jsonEncode({
+            'bio':bio
+          })
+      );}
+
+
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      // print("email:"+email);
+      print(jsonData);
+      // bool isVerified = jsonData['isVerified'] ?? false; // Replace 'isVerified' with the key for verification status in your API response
+
+      if (jsonData['status']) {
+        // User is verified, redirect back to the login page
+
+      } else {
+        print("scoobydoo");
+        // User verification denied, show a snackbar
+        // Fluttertoast.showToast(
+        //   msg: 'Email verification was denied',
+        //   toastLength: Toast.LENGTH_LONG,
+        //   gravity: ToastGravity.BOTTOM,
+        // );
+      }
+    } else {
+      // If the request is not successful, throw an error or handle it accordingly
+      throw Exception('Failed to fetch data');
+    }
+  } catch (e) {
+    // Handle any exceptions that occur during the HTTP request
+    print('Error: $e');
+    // You can show a snackbar here to inform the user about the error if needed
+  }
+}
+
+
+
+
+Future<Map<String, dynamic>?> getProfileData(String userId) async {
+  try {
+    final String url = 'https://skidobackend.onrender.com/comm/getUserData/$userId';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = jsonDecode(response.body);
+      print("response data"+response.body);
+      if (responseData['status'] == true) {
+        Map<String, dynamic>? userData = responseData['data'];
+        return userData; // Return the userData
+      }
+    } else {
+      // Request failed with an error status code
+      print('Request failed with status: ${response.statusCode}');
+    }
+  } catch (e) {
+    // Request failed for some other reason (e.g., network issues)
+    print('Error: $e');
+  }
+
+  // Return null if any error occurred or if the status is not true
+  return null;
+}
+
+
+
+
+
 class _BookState extends State<Book> {
-  // Course courseInstance = Course();
-  // int currentIndex = 0;
-  //
-  // void handleButtonPress() {
-  //   courseInstance.toggleFavourite(currentIndex);
-  // }
+
+   TextEditingController phnCtl=new TextEditingController();
+   TextEditingController dsgCtl=new TextEditingController();
+   TextEditingController interestCtl=new TextEditingController();
+   TextEditingController bioCtl=new TextEditingController();
+   late String email = '';
+   late String uniqueId = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // phnCtl = TextEditingController();
+    // dsgCtl = TextEditingController();
+    // interestCtl = TextEditingController();
+    // bioCtl = TextEditingController();
+    fetchUserData();
+  }
+  Future<void> fetchUserData() async {
+    String userId = widget.userId; // Replace with the actual user ID
+    Map<String, dynamic>? userData = await getProfileData(userId);
+    if (userData != null) {
+      setState(() {
+        // Update the state with retrieved user data
+        phnCtl.text = userData['phone_no'].toString() ?? '';
+        dsgCtl.text = userData['current_designation'] ?? '';
+        interestCtl.text=userData['interests'] ?? '';
+        bioCtl.text = userData['bio'] ?? '';
+        email = userData['email'] ?? '';
+        uniqueId = userData['unique_id'] ?? '';
+        print("user data");
+        print(phnCtl.text);
+        print(dsgCtl.text);
+        print(dsgCtl.text);
+        print(email);
+        print(uniqueId);
+      });
+    } else {
+      // Handle the case when userData is null or not found
+      print('User data is null or not found.');
+    }
+  }
+
+  bool phnenabled=false;
+  bool dsgenabled=false;
+  bool intenabled=false;
+  bool bioenabled=false;
+
+  FocusNode phnFocusNode = FocusNode();
+  FocusNode dsgFocusNode = FocusNode();
+  FocusNode intFocusNode = FocusNode();
+  FocusNode bioFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     final height=MediaQuery.of(context).size.height;
     final width=MediaQuery.of(context).size.width;
-    return SingleChildScrollView(
-      child: Container(
-        decoration: BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage('assets/elements/backpg.png'),
-          // )
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              children: [
-                // Row(
-                //   children: [
-                //     IconButton(onPressed: () { Navigator.pop(context); }, icon: Icon(Icons.arrow_back_ios_new_rounded, size: 25, color: Colors.white, )),
-                //     // SizedBox(width: width*0.6),
-                //     // Icon(Icons.search, size: 25, color: Colors.white,),
-                //     // Icon(Icons.favorite, size: 25, color: Colors.white,),
-                //     // Icon(Icons.shopping_cart, size: 25, color: Colors.white,),
-                //     // Icon(Icons.person, size: 25, color: Colors.white,)
-                //   ],
-                // ),
-                // SizedBox(height: 20),
-                // Stack(
-                //   children: [
-                //     Row(
-                //       children: [
-                //         CardUI(
-                //             height: 170,
-                //             width: width-120,
-                //             child: Center(
-                //                 child: Text(
-                //                 'Scroll Across to find a\nsuitable language',
-                //                   textAlign: TextAlign.center,
-                //                   style: GoogleFonts.montserrat(
-                //                     color: Colors.white,
-                //                     fontWeight: FontWeight.bold,
-                //                     fontSize: 20,
-                //                   ),
-                //                 ),
-                //             ),
-                //         ),
-                //       ],
-                //     ),
-                //     Align(
-                //       alignment: AlignmentDirectional.topEnd,
-                //       child: Container(
-                //         height: 190,
-                //         //alignment: Alignment.center,
-                //           child: Image(image: AssetImage('assets/courseimg/people.png'),fit: BoxFit.cover),
-                //       ),
-                //     ),
-                //     // Container(
-                //     //   width: 250,
-                //     //   height: 250,
-                //     //   color: Colors.amberAccent,
-                //     // ),
-                //     // Positioned( //<-- SEE HERE
-                //     //   right: 0,
-                //     //   top: 15,
-                //     //   child: Container(
-                //     //     width: 230,
-                //     //     height: 230,
-                //     //     color: Colors.deepPurpleAccent,
-                //     //   ),
-                //     // ),
-                //   ],
-                // ),
-                // SizedBox(height: 10),
-                // Center(
-                //   child: Text(
-                //     'Purchase Our Signature\nCoding Classes',
-                //     textAlign: TextAlign.center,
-                //     style: GoogleFonts.montserrat(
-                //       color: Colors.white,
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 25,
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       onTap: (){
-                //         Navigator.push(
-                //           context,
-                //           MaterialPageRoute(builder: (context) => DetailsPage()),
-                //         );
-                //       },
-                //       child: CourseTile(
-                //         img: 'assets/courseimg/c1.png',
-                //         name: 'Python',
-                //         price: '54000',
-                //         description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //   ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //               currentIndex=0;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c2.png',
-                //           name: 'C',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //               currentIndex=1;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c3.png',
-                //           name: 'C++',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //               currentIndex=2;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c4.png',
-                //           name: 'Java',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //               currentIndex=3;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c5.png',
-                //           name: 'JavaScript',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //               currentIndex=4;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c6.png',
-                //           name: 'CSS',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //               currentIndex=5;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                //
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c7.png',
-                //           name: 'HTML',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //               currentIndex=6;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                //
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c8.png',
-                //           name: 'R',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //             currentIndex=7;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                //
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c9.png',
-                //           name: 'PHP',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //             setState(() {
-                //             currentIndex=8;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
-                //
-                // SizedBox(height: 10),
-                // Stack(
-                //   children :[
-                //     GestureDetector(
-                //       // onTap: Navigator.push(
-                //       //   context,
-                //       //   MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                //       // ),
-                //       child: CourseTile(
-                //           img: 'assets/courseimg/c10.png',
-                //           name: 'SQL',
-                //           price: '54000',
-                //           description: 'Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. It supports multiple programming paradigms beyond object-oriented programming, such as procedural and functional programming.'
-                //       ),
-                //     ),
-                //     Positioned(
-                //         bottom: 0,
-                //         right: 20,
-                //         child:  GestureDetector(
-                //           onTap: (){
-                //
-                //             setState(() {
-                //             currentIndex=9;
-                //             });
-                //             setState(() {
-                //               handleButtonPress();
-                //             });
-                //           },
-                //           child: Icon(
-                //             courseInstance.favouriteval(currentIndex)?
-                //             Icons.favorite:
-                //             Icons.favorite_border,
-                //             color: courseInstance.favouriteval(currentIndex)?
-                //             Color(0xff5D73C3):Colors.white,
-                //           ),
-                //         )
-                //     ),
-                //   ],
-                // ),
 
-                
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 100,
+                width: width,
+                // decoration: BoxDecoration(
+                //   image:
+                // ),
+                color: Colors.transparent,
+                child: Center(
+                  child: Text("User Profile",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                      //fontFamily: "Montserrat",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                  ),
+                ),
+              ),
+              ClipRRect(
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  height: height,
+                  width: width,
+                  decoration: BoxDecoration(
+                      color: Color(0xff5F6097),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(80),
+                        topRight: Radius.circular(30),
+                      )
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          ClipRRect(
+                            child: Container(
+                              height: width*0.35,
+                              width: width*0.35,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white,width: 2),
+                                borderRadius: BorderRadius.circular(width*0.175),
+                                color: Colors.transparent,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width:10),
+                          Container(
+                            child: Column(
+                              children: [
+                                Text("Martin Alex",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    //fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                //SizedBox(height:5),
+                                Text('I am a Product Manager',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    //fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Container(
+                                    width: width-30-width*0.35-10,
+                                    child: Text(
+                                      'Bio',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        color: Colors.white,
+                                        //fontFamily: "Montserrat",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14,
+                                      ),
+                                    )
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      Text("General",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.montserrat(
+                          color: Colors.white,
+                          //fontFamily: "Montserrat",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Container(
+                        width: width-30,
+                        height: 61,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withOpacity(0.7), width: 0.4),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0,5),
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.25),
+                              Colors.white.withOpacity(0.2),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.mail, color: Colors.white, size: 30),
+                                SizedBox(width: 30),
+                                Text(email,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    //fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: width-30,
+                        height: 61,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withOpacity(0.7), width: 0.4),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0,5),
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.25),
+                              Colors.white.withOpacity(0.2),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.visibility, color: Colors.white, size: 30),
+                                SizedBox(width: 30),
+                                Text(
+                                  "Password",
+                                  // password.substring(0,20),
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    //fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                SizedBox(width: 133),
+                                IconButton(
+                                    onPressed: ()
+                                    {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                          ForgotPassword()
+                                      )
+                                      );
+                                    },
+                                    icon:Icon(Icons.edit, color: Colors.white, size: 30)
+                                ),
+                              ],
+                            )
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: width-30,
+                        height: 61,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withOpacity(0.7), width: 0.4),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0,5),
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.25),
+                              Colors.white.withOpacity(0.2),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.phone_android_rounded, color: Colors.white, size: 30),
+                                SizedBox(width: 30),
+                                Container(
+                                  width: width-181,
+                                  child: TextField(
+                                    // autofillHints: [],
+                                    controller: phnCtl,
+                                    enabled: phnenabled,
+                                    focusNode: phnFocusNode,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+
+                                      hintText: 'Enter Phone Number',
+                                      hintStyle: GoogleFonts.montserrat(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: ()
+                                    {
+                                      phnFocusNode.requestFocus();
+                                      setState(() {
+                                        phnenabled=!phnenabled;
+                                      });
+                                      if(phnenabled==false)
+                                        {
+                                          updateProfile(
+                                            phnCtl.text,
+                                            dsgCtl.text,
+                                            interestCtl.text,
+                                            bioCtl.text,
+                                            widget.userId,
+                                            "phone_no"
+                                          );
+                                        }
+                                    },
+                                    icon:Icon(phnenabled?Icons.done:Icons.edit, color: Colors.white, size: 30)
+                                ),
+                              ],
+                            )
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: width-30,
+                        height: 61,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withOpacity(0.7), width: 0.4),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0,5),
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.25),
+                              Colors.white.withOpacity(0.2),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.how_to_reg, color: Colors.white, size: 30),
+                                SizedBox(width: 30),
+                                Text(uniqueId,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    //fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: width-30,
+                        height: 61,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withOpacity(0.7), width: 0.4),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0,5),
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.25),
+                              Colors.white.withOpacity(0.2),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.person_4, color: Colors.white, size: 30),
+                                SizedBox(width: 30),
+                                Container(
+                                  width: width-181,
+                                  child: TextField(
+                                    controller: dsgCtl,
+                                    focusNode: dsgFocusNode,
+                                    enabled: dsgenabled,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Designation',
+                                      hintStyle: GoogleFonts.montserrat(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: ()
+                                    {
+                                      dsgFocusNode.requestFocus();
+                                      setState(() {
+                                        dsgenabled=!dsgenabled;
+                                      });
+                                    if(dsgenabled==false)
+                                    {
+                                      updateProfile(
+                                      phnCtl.text,
+                                      dsgCtl.text,
+                                      interestCtl.text,
+                                      bioCtl.text,
+                                      widget.userId,
+                                      "designation"
+                                      );
+                                    }
+                                    },
+                                    icon:Icon(dsgenabled?Icons.done:Icons.edit, color: Colors.white, size: 30)
+                                ),
+                              ],
+                            )
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: width-30,
+                        height: 61,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withOpacity(0.7), width: 0.4),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0,5),
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.25),
+                              Colors.white.withOpacity(0.2),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.interests_rounded, color: Colors.white, size: 30),
+                                SizedBox(width: 30),
+                                Container(
+                                  width: width-181,
+                                  child: TextField(
+                                    enabled: intenabled,
+                                    focusNode: intFocusNode,
+                                    controller: interestCtl,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Interests',
+                                      hintStyle: GoogleFonts.montserrat(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: ()
+                                    {
+                                      intFocusNode.requestFocus();
+                                        setState(() {
+                                          intenabled=!intenabled;
+                                        });
+                                      if(intenabled==false)
+                                      {
+                                        updateProfile(
+                                            phnCtl.text,
+                                            dsgCtl.text,
+                                            interestCtl.text,
+                                            bioCtl.text,
+                                            widget.userId,
+                                            "interests"
+                                        );
+                                      }
+                                    },
+                                    icon:Icon(intenabled?Icons.done:Icons.edit, color: Colors.white, size: 30)
+                                ),
+                              ],
+                            )
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: width-30,
+                        height: 61,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withOpacity(0.7), width: 0.4),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0,5),
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white.withOpacity(0.25),
+                              Colors.white.withOpacity(0.2),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                            child: Row(
+                              children: [
+                                Icon(Icons.add_reaction_rounded, color: Colors.white, size: 30),
+                                SizedBox(width: 30),
+                                Container(
+                                  width: width-181,
+                                  child: TextField(
+                                    enabled: bioenabled,
+                                    controller: bioCtl,
+                                    focusNode: bioFocusNode,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Bio',
+                                      hintStyle: GoogleFonts.montserrat(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: ()
+                                    {
+                                      bioFocusNode.requestFocus();
+                                      setState(() {
+                                        bioenabled=!bioenabled;
+                                      });
+                                      if(bioenabled==false)
+                                      {
+                                        updateProfile(
+                                            phnCtl.text,
+                                            dsgCtl.text,
+                                            interestCtl.text,
+                                            bioCtl.text,
+                                            widget.userId,
+                                            "bio"
+                                        );
+                                      }
+                                    },
+                                    icon:Icon(bioenabled?Icons.done:Icons.edit, color: Colors.white, size: 30)
+                                ),
+                              ],
+                            )
+                        ),
+                      ),
+
+
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -503,55 +743,3 @@ class _BookState extends State<Book> {
   }
 
 }
-
-// class Course {
-//   List<Map<String, dynamic>> courseList = [];
-//
-//   Course() {
-//     initializeCourses();
-//   }
-//
-//   void initializeCourses() {
-//     for (int i = 0; i < 10; i++) {
-//       String courseName = "Course ${i + 1}";
-//       bool isFavourite = false;
-//       courseList.add({
-//         'name': courseName,
-//         'isFavourite': isFavourite,
-//       });
-//     }
-//   }
-//
-//   void toggleFavourite(int index) {
-//     if (index >= 0 && index < courseList.length) {
-//       courseList[index]['isFavourite'] = !courseList[index]['isFavourite'];
-//     }
-//   }
-//
-//   bool favouriteval(int index){
-//     return courseList[index]['isFavourite'];
-//   }
-// }
-
-
-
-
-
-//Stack(
-//                     children: [
-//                       CardUI(
-//                           height: 150,
-//                           width: width-30,
-//                           child: Text(
-//                             'Scroll Across to find a language'
-//                           ),
-//                       ),
-//                       Align(
-//                         alignment: AlignmentDirectional.topEnd,
-//                         child: Container(
-//                             //alignment: Alignment.center,
-//                             child: Image(image: AssetImage('assets/courseimg/people.png'),)
-//                         ),
-//                       ),
-//                     ],
-//                   ),

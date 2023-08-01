@@ -1,7 +1,7 @@
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:skido/pages/signin_page.dart';
 
 
@@ -17,152 +17,131 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
+    return Container(
+      decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/elements/backg.png'),
             fit: BoxFit.cover,
-          ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              top: height*.18,
-              left: width*.13,
-              child:Image(image: AssetImage('assets/onboarding/onb2.png')),
-            ),
-            Positioned(
-                top: height*.53,
-                left: width*.05,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignInPage()),
-                      );
-                    },
+          )
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              children: [
+                SizedBox(height: height*.15,),
+                Container(
+                  height: height*0.4,
+                  width: width,
+                  child: Image(image: AssetImage('assets/onboarding/onboarding2.png'),),
+                ),
+                SizedBox(height: 10),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                     child: Container(
-                      width: width*.9,
-                      height: height*.45  ,
-                      color: Colors.transparent,
-                      child: Stack(
-                        children: [
-                          BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaY: 3,
-                              sigmaX: 3,
-                            ),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 30,),
-                                  Text(
-                                    "Education is for",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                  SizedBox(height: 10,),
-                                  Text(
-                                    "improving the lives of",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                  SizedBox(height: 10,),
-                                  Text(
-                                    "others & for leaving your",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                  SizedBox(height: 10,),
-                                  Text(
-                                    "community & world",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                  SizedBox(height: 10,),
-                                  Text("better than you found it.",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                  SizedBox(height: 30,),
+                      height: height*0.35,
+                      width: width,
+                      padding: EdgeInsets.all(15.0),
+                      decoration: BoxDecoration(
+                        //color: Colors.white.withOpacity(0.3),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.white.withOpacity(0.3),
+                            Colors.white.withOpacity(0.1),
+                          ],
+                          begin:Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: [0.2,0.6],
+                        ),
+                        borderRadius: BorderRadius.circular(30.0),
+                        border: Border.all(color:Colors.white.withOpacity(0.6), width: 0.4),
 
-                                  Text("Join our community now.",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(height:20),
+                          Text("Communities Empower\nEducation & Transform\nLives. Let's Engage In Our\nCommunities & Foster\nGrowth Together.",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              color: Colors.white,
+                              //fontFamily: "Montserrat",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
+                          ),
+                          SizedBox(height:height*0.028),
+                          Container(
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.4),
+                                    blurRadius: 4,
+                                    spreadRadius: 0,
+                                    offset: Offset(
+                                      0,
+                                      5,
                                     ),
+                                  )
+                                ]
+                            ),
+                            child: SizedBox(
+                              width: 200,
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0.0,
+                                  backgroundColor: Color(0xff5D73C3),
+                                  primary: Colors.red.withOpacity(0),
+                                  shadowColor: Colors.black,
+
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const SignInPage()),
+                                  );
+                                },
+                                child: Text(
+                                  'Join Us',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 17,
                                   ),
-                                  SizedBox(height: 30,),
-                                  Container(
-                                    height: 50,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xff5D73C3),
-                                        boxShadow: [
-                                          BoxShadow(blurRadius: 25,
-                                            color: Colors.black38,
-                                            offset: Offset(
-                                              -3.0, // Move to right 10  horizontally
-                                              5.0, // Move to bottom 10 Vertically
-                                            ),)
-                                        ],
-                                        borderRadius: BorderRadius.circular(15)
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Join Us',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                          color: Colors.white ,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                border:Border.all(color: Colors.white.withOpacity(0.18)),
-                                borderRadius: BorderRadius.circular(30),
-                                gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.white.withOpacity(0.48),
-                                      Colors.white.withOpacity(0.05),
-                                    ]
-                                )
-                            ),
-                          ),
-
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                child: Text("Skip For Now",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    //fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
                   ),
-                ))
-          ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

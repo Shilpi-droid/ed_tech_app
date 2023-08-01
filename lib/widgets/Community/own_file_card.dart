@@ -64,8 +64,8 @@ class _OwnFileCardState extends State<OwnFileCard> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15,vertical:5),
           child: Container(
-            height: height*.28,
-            width: width*.4,
+            height: height*.3,
+            width: width*.45,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.transparent
@@ -74,9 +74,30 @@ class _OwnFileCardState extends State<OwnFileCard> {
               color: Colors.white.withOpacity(.5),
               margin: EdgeInsets.all(13),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
+                  borderRadius:
+                  BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+
+                  )
               ),
-              child: Column(
+              child:
+              widget.message.length>0?
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:  EdgeInsets.only(left:8.0,top:5,right:8),
+                    child: Text(widget.sender,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                  ),
+                  SizedBox(height: 6,),
+                  Expanded(child: Image.network(widget.path,fit: BoxFit.cover,)),
+                ],
+              )
+              :
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -86,34 +107,20 @@ class _OwnFileCardState extends State<OwnFileCard> {
                   ),
                   SizedBox(height: 6,),
                   Expanded(child: Image.network(widget.path,fit: BoxFit.fitWidth,)),
-                  // Expanded(child: Image.asset("assets/Community/camera_icon.png",fit: BoxFit.fitHeight,)),
-                  //  Expanded(child: Image.file(File(path),fit: BoxFit.fitHeight,)),
-                 // Expanded(
-                 //     child:
-                 //     // widget.isVideo ?
-                 //     Chewie(
-                 //       controller: ChewieController(
-                 //         videoPlayerController: widget.videoPlayerController!,
-                 //         autoPlay: false,
-                 //         looping: true,
-                 //         // Additional customization options
-                 //       ),
-                 //     )
-                 //     :Image.network(widget.path,fit: BoxFit.fitHeight,)
-                 // ),
-                  widget.message.length>0?
+
                   Container(
                       height: 40,
                       padding: EdgeInsets.only(left: 15,top: 0),
                       child: Text(
-                          widget.message,
+                        widget.message,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: Colors.white,fontSize: 15,fontWeight: FontWeight.w600
+                            color: Colors.white,fontSize: 15,fontWeight: FontWeight.w600
                         ),
-                      )):Container()
+                      ))
                 ],
-              ),
+              )
+              ,
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skido/pages/apply_now_page.dart';
@@ -217,6 +218,129 @@ class MyApp extends StatelessWidget {
 //   }
 // }
 
+// class MyHomePage extends StatefulWidget {
+//   MyHomePage({super.key, required this.token});
+//   final token;
+//
+//
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
+//
+// class _MyHomePageState extends State<MyHomePage> {
+//   int _selectedIndex = 2;
+//   late String userId;
+//   late String _userId;
+//
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//     Map<String,dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+//     userId = jwtDecodedToken['name'];
+//     _userId=jwtDecodedToken['_id'];
+//
+//   }
+//
+//   @override
+//   void _onItemTap(int index) {
+//     setState(() {
+//       _selectedIndex = index;
+//     });
+//   }
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//
+//     return Container(
+//       height: double.maxFinite,
+//       decoration: BoxDecoration(
+//         image: DecorationImage(
+//           image: AssetImage('assets/elements/backg.png'),
+//           fit: BoxFit.cover,
+//         ),
+//       ),
+//       child: Scaffold(
+//         backgroundColor: Colors.transparent,
+//
+//         // appBar: AppBar(
+//         //   title: Text('Bottom Navigation Bar Tutorial'),
+//         // ),
+//         body: Center(
+//           child: [
+//             LandingPage(name: userId),
+//             Homework(),
+//             CommunityPage(name: userId),
+//             Book(userId: _userId),
+//             Settings(token: widget.token,),
+//           ].elementAt(_selectedIndex),
+//         ),
+//         bottomNavigationBar:
+//         ClipRRect(
+//           borderRadius: BorderRadius.only(
+//             topRight: Radius.circular(18),
+//             topLeft: Radius.circular(18),
+//           ),
+//           child: BottomNavigationBar(
+//             backgroundColor: Color.fromRGBO(79, 80, 142, 0.95),
+//             type: BottomNavigationBarType.fixed,
+//             showSelectedLabels: true,
+//             showUnselectedLabels: false,
+//             unselectedItemColor: Color(0xffD9D9D9),
+//             selectedItemColor: Color(0xffD9D9D9),
+//             items: const <BottomNavigationBarItem>[
+//               BottomNavigationBarItem(
+//                   // activeIcon: Icon(
+//                   //   Icons.space_dashboard_rounded,
+//                   //   //color: Color(0xff1C9C74),
+//                   // ),
+//                   icon: Icon(
+//                     Icons.space_dashboard_rounded,
+//                   ),
+//                   label: "Courses"
+//
+//               ),
+//               BottomNavigationBarItem(
+//                   icon: Icon(
+//                     Icons.book,
+//
+//                   ),
+//                   label: "Network"
+//               ),
+//               BottomNavigationBarItem(
+//                   icon: Icon(
+//                     Icons.home_work,
+//                   ),
+//                   label: "Community"
+//               ),
+//               BottomNavigationBarItem(
+//                   icon: Icon(
+//                     Icons.person,
+//                   ),
+//                   label: "Profile"
+//               ),
+//               BottomNavigationBarItem(
+//                   icon: Icon(
+//                     Icons.settings,
+//                   ),
+//                   label: "Settings"
+//               ),
+//             ],
+//             currentIndex: _selectedIndex,
+//             onTap: _onItemTap,
+//             selectedFontSize: 12.0,
+//             unselectedFontSize: 12.0,
+//           ),
+//         ),
+//       ),
+//     );
+//
+//
+//   }
+// }
+
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({super.key, required this.token});
   final token;
@@ -227,8 +351,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 2;
   late String userId;
+  late String _userId;
 
   @override
   void initState() {
@@ -236,7 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     Map<String,dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     userId = jwtDecodedToken['name'];
-
+    _userId=jwtDecodedToken['_id'];
   }
 
   @override
@@ -246,10 +371,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: double.maxFinite,
       decoration: BoxDecoration(
@@ -267,9 +390,9 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: [
             LandingPage(name: userId),
-            Book(),
             Homework(),
             CommunityPage(name: userId),
+            Book(userId:_userId,),
             Settings(token: widget.token,),
           ].elementAt(_selectedIndex),
         ),
@@ -280,6 +403,11 @@ class _MyHomePageState extends State<MyHomePage> {
             topLeft: Radius.circular(18),
           ),
           child: BottomNavigationBar(
+            selectedLabelStyle: GoogleFonts.montserrat(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+            ),
             backgroundColor: Color.fromRGBO(79, 80, 142, 0.95),
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: true,
@@ -288,34 +416,30 @@ class _MyHomePageState extends State<MyHomePage> {
             selectedItemColor: Color(0xffD9D9D9),
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  activeIcon: Icon(
-                    Icons.space_dashboard_rounded,
-                    //color: Color(0xff1C9C74),
-                  ),
                   icon: Icon(
-                    Icons.space_dashboard_rounded,
+                    Icons.book_rounded,
                   ),
-                  label: "Dashboard"
+                  label: "Courses"
 
               ),
               BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.book,
+                    Icons.connect_without_contact_rounded,
 
                   ),
-                  label: "Book"
+                  label: "Network"
               ),
               BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.home_work,
+                    Icons.groups_2_rounded,
                   ),
-                  label: "Homework"
+                  label: "Community"
               ),
               BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.groups_rounded,
+                    Icons.person_rounded,
                   ),
-                  label: "Webinar"
+                  label: "Profile"
               ),
               BottomNavigationBarItem(
                   icon: Icon(

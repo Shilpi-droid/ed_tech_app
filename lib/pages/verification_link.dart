@@ -120,7 +120,7 @@ class _VerificationLinkHandlerPageState extends State<VerificationLinkHandlerPag
                       padding: EdgeInsets.symmetric(horizontal: 7),
                       height: height*.07 ,
                       child: Text(
-                        "We have sent a password recovery instructions to your email.",
+                        "We have sent a email verification instructions to your email.",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 17,
